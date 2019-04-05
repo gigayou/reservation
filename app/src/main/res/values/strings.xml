@@ -1,0 +1,72 @@
+<resources>
+    <string name="app_name" translatable="false">reservation</string>
+
+    <!-- common -->
+    <string name="common_example" translatable="false">示例图片</string>
+    <string name="app_upgrade_tip_title" translatable="false">Release Notes (%1$s)</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="cancel" translatable="false">CANCEL</string>
+    <string name="wait_please" translatable="false">敬请期待</string>
+
+    <!--  home ic_activity -->
+    <string name="home" translatable="false">首页</string>
+    <string name="msg" translatable="false">消息</string>
+    <string name="mine" translatable="false">我的</string>
+
+    <!-- splash activity -->
+    <string name="splash_content_description" translatable="false">跳转页面</string>
+
+    <string name="press_again_exit" translatable="false">再按一次退出</string>
+
+    <!-- login activity -->
+    <string name="hint_username" translatable="false">请输入用户名</string>
+    <string name="hint_password" translatable="false">请输入密码</string>
+    <string name="btn_login_text" translatable="false">登录</string>
+    <string name="btn_registet_text" translatable="false">注册</string>
+    <string name="Success" translatable="false">登录成功</string>
+    <string name="Loading" translatable="false">正在加载</string>
+    <string name="back_login" translatable="false">返回</string>
+
+    <!-- login react message -->
+    <string name="LOGIN_LOADING_MESSAGE" translatable="false">正在登录</string>
+    <string name="LOGIN_SUCCESS_MESSAGE" translatable="false">登录成功</string>
+
+    <!-- common react message -->
+    <string name="LOADING_MESSAGE" translatable="false">正在加载</string>
+    <string name="SUCCESS_MESSAGE" translatable="false">加载成功</string>
+    <string name="BACKUPING_MESSAGE" translatable="false">正在备份</string>
+    <string name="BACKUP_SUCCESS_MESSAGE" translatable="false">备份成功</string>
+    <string name="RESTORING_MESSAGE" translatable="false">正在还原</string>
+    <string name="RESTORE_SUCCESS_MESSAGE" translatable="false">还原成功</string>
+
+    <!-- system manager home -->
+    <string name="sysm_manage_hospital" translatable="false">医院管理</string>
+    <string name="sysm_manage_hospital_admin" translatable="false">医院管理员管理</string>
+    <string name="sysm_manage_db" translatable="false">数据库管理</string>
+    <string name="sysm_system_setting" translatable="false">系统设置</string>
+    <!-- system manager hos manage-->
+    <string name="fragment_hos_manage_title" translatable="false">医院管理</string>
+    <!-- system manager db manage-->
+    <string name="fragment_db_manage_title" translatable="false">数据库管理</string>
+    <string name="create_db_backup" translatable="false">新建备份</string>
+    <!-- system manager hosadmin manage -->
+    <string name="fragment_hosadmin_manage_title" translatable="false">医院管理员管理</string>
+
+    <!-- hospital manager home -->
+    <string name="hosm_manage_hosinfo" translatable="false">医院信息管理</string>
+    <string name="hosm_manage_department" translatable="false">科室管理</string>
+    <string name="hosm_manage_doctor" translatable="false">医疗专家管理</string>
+    <string name="hosm_mange_reservation" translatable="false">挂号设置管理</string>
+    <string name="hosm_manage_dataexcel" translatable="false">数据报表管理</string>
+
+    <!-- doctor home -->
+    <string name="doctor_manage_reserdate" translatable="false">坐诊时间管理</string>
+    <string name="doctor_manage_selfinfo" translatable="false">个人简历管理</string>
+    <string name="doctor_manage_reserinfo" translatable="false">挂号信息管理</string>
+    <string name="doctor_answer" translatable="false">回答用户提问</string>
+
+    <!-- about -->
+    <string name="about_copyright" translatable="false">---关于介绍---</string>
+
+
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="home_tab_height">49dp</dimen>
+    <dimen name="common_content_spacing">@dimen/qmui_content_spacing_horizontal</dimen>
+
+    <!-- ListView -->
+    <dimen name="list_divider_height">1px</dimen>
+    <dimen name="list_divider_height_negative">-1px</dimen>
+    <!-- Helper 系列界面 -->
+
+    <!-- ColorHelper 颜色工具 -->
+    <dimen name="colorHelper_square_length">46dp</dimen>
+    <dimen name="colorHelper_square_margin">23dp</dimen>
+    <dimen name="colorHelper_square_desc_marginTop">10dp</dimen>
+    <dimen name="colorHelper_column_marginBottom">35dp</dimen>
+
+    <!-- DeviceHelper 设备检测工具 -->
+    <dimen name="deviceHelper_column_marginBottom">30dp</dimen>
+
+    <!-- DrawableHelper Drawable 工具 -->
+    <dimen name="drawableHelper_column_marginBottom">35dp</dimen>
+    <dimen name="drawableHelper_item_marginHorizontal">20dp</dimen>
+    <dimen name="drawableHelper_common_shape_size">50dp</dimen>
+
+    <!-- Span Utils 各种 Span 工具 -->
+    <dimen name="spanUtils_column_marginBottom">35dp</dimen>
+    <dimen name="spanUtils_common_textSize">16sp</dimen>
+
+    <!-- 椭圆柱的长宽 -->
+    <dimen name="solid_image_common_width">4dp</dimen>
+    <dimen name="solid_image_common_height">24dp</dimen>
+    <dimen name="space_left_right_button">51dp</dimen>
+    <dimen name="space_left_right_button_minus_12">39dp</dimen>
+    <dimen name="space_top_bottom_button">18dp</dimen>
+    <dimen name="space_left_right_content">12dp</dimen>
+
+    <dimen name="px_1">1px</dimen>
+
+    <dimen name="dp_8">8dp</dimen>
+    <dimen name="dp_12">12dp</dimen>
+    <dimen name="dp_16">16dp</dimen>
+    <dimen name="dp_28">28dp</dimen>
+    <dimen name="dp_32">32dp</dimen>
+    <dimen name="dp_36">36dp</dimen>
+    <dimen name="dp_40">40dp</dimen>
+    <dimen name="dp_44">44dp</dimen>
+    <dimen name="dp_56">56dp</dimen>
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="dp_60">60dp</dimen>
+    <dimen name="dp_20">20dp</dimen>
+    <dimen name="dp_80">80dp</dimen>
+    <dimen name="dp_120">120dp</dimen>
+    <dimen name="dp_160">160dp</dimen>
+    <dimen name="dp_100">100dp</dimen>
+    <dimen name="dp_24">24dp</dimen>
+    <dimen name="dp_59">59dp</dimen>
+    <dimen name="dp_54">54dp</dimen>
+    <dimen name="dp_66">66dp</dimen>
+</resources>
