@@ -38,8 +38,8 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
     NestedScrollView scrollView;
     @BindString(R.string.fragment_hos_manage_title)
     String title;
-    @BindString(R.string.create_hospital)
-    String CREATE_HOSPITAL_TITLE;
+    @BindString(R.string.common_right_btn_title)
+    String RIGHT_BTN_TITLE;
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
@@ -54,7 +54,7 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
     @Override
     protected void initTopBar() {
         super.initTopBar();
-        mTopBar.addRightTextButton(CREATE_HOSPITAL_TITLE, mTopBar.getId()).setOnClickListener(null);
+        mTopBar.addRightTextButton(RIGHT_BTN_TITLE, mTopBar.getId()).setOnClickListener(null);
     }
 
 
@@ -127,7 +127,7 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
             String dialogContent = hospital.getDetailAddr();
             showMessagePositiveDialog(dialogTitle, dialogContent,
                     "取消", (dialog, index) -> {dialog.dismiss();},
-                    "还原", (dialog, index) -> {
+                    "关闭", (dialog, index) -> {
                         dialog.dismiss();
                     });
         });
@@ -166,7 +166,7 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
     }
 
     /**
-     * 接收服务端的json数据后序列化成BackupDBFile对象列表
+     * 接收服务端的json数据后序列化成hospital对象列表
      * 然后将这些对象存储到SQLite中
      *
      * @param json json数据

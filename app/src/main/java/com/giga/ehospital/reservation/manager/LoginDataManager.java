@@ -2,7 +2,7 @@ package com.giga.ehospital.reservation.manager;
 
 import com.giga.ehospital.reservation.model.User;
 import com.giga.ehospital.reservation.model.system.Buser;
-import com.giga.ehospital.reservation.api.base.LoginAPI;
+import com.giga.ehospital.reservation.api.LoginAPI;
 import com.giga.ehospital.reservation.net.CustomInterceptor;
 import com.giga.ehospital.reservation.util.ConfigUtil;
 import com.linxiao.framework.manager.BaseDataManager;

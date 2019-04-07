@@ -23,9 +23,11 @@ import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout;
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import com.tmall.ultraviewpager.UltraViewPager;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class SysAdminHomeController extends QMUIWindowInsetLayout {
 
@@ -39,6 +41,8 @@ public class SysAdminHomeController extends QMUIWindowInsetLayout {
     QMUITabSegment mTabSegment;
     @BindView(R.id.ultraview_pager)
     UltraViewPager mHospitalActivityUltraViewPager;
+    @BindString(R.string.wait_please)
+    String WAIT_PLEASE_TOAST_TITLE;
 
     private Context mContext;
     private ControllerClickHandler mHandler;
@@ -68,7 +72,8 @@ public class SysAdminHomeController extends QMUIWindowInsetLayout {
                 mHandler.startFragment(new DBManageFragment());
                 break;
             case R.id.system_setting_linearLayout:
-                mHandler.startFragment(new SysSettingManager());
+//                mHandler.startFragment(new SysSettingManager());
+                Toasty.info(getContext(), WAIT_PLEASE_TOAST_TITLE, Toasty.LENGTH_SHORT, true).show();
                 break;
         }
     }

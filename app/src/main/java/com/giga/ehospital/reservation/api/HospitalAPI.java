@@ -1,4 +1,4 @@
-package com.giga.ehospital.reservation.api.sysadmin;
+package com.giga.ehospital.reservation.api;
 
 import com.giga.ehospital.reservation.model.hospital.Hospital;
 
@@ -75,12 +75,11 @@ public interface HospitalAPI {
     /**
      * 分页显示所有医院信息
      *
-     * @param clzJson 类信息json
+     * @param hospital
      * @return
      */
-    @Headers({"Content-Type: application/json;charset=UTF-8"})
     @POST("/hospital/hospital/pagelist")
-    Observable<ResponseBody> pageList(String clzJson);
+    Observable<ResponseBody> pageList(@Body Hospital hospital);
 
     /**
      * 更新医院信息

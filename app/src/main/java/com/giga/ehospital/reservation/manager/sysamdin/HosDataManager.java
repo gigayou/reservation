@@ -1,6 +1,6 @@
 package com.giga.ehospital.reservation.manager.sysamdin;
 
-import com.giga.ehospital.reservation.api.sysadmin.HospitalAPI;
+import com.giga.ehospital.reservation.api.HospitalAPI;
 import com.giga.ehospital.reservation.model.hospital.Hospital;
 import com.giga.ehospital.reservation.net.CustomInterceptor;
 import com.giga.ehospital.reservation.util.ConfigUtil;
@@ -21,8 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HosDataManager extends BaseDataManager {
 
     private static String URL = ConfigUtil.URL;
-    public static String HOSPITAL_CLZ_JSON = "{\"clz\":\"hospital\"}";
-
 
     private HospitalAPI hospitalAPI;
 
@@ -114,8 +112,8 @@ public class HosDataManager extends BaseDataManager {
      *
      * @return
      */
-    public Observable<String> pageList() {
-        return hospitalAPI.pageList(HOSPITAL_CLZ_JSON)
+    public Observable<String> pageList(Hospital hospital) {
+        return hospitalAPI.pageList(hospital)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }
 

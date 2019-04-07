@@ -8,6 +8,7 @@ import org.greenrobot.greendao.annotation.Property;
 
 import lombok.Data;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Transient;
 
 //@Entity(nameInDb = "buser_info")
 @Entity
