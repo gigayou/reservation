@@ -46,6 +46,7 @@
     <string name="sysm_system_setting" translatable="false">系统设置</string>
     <!-- system manager hos manage-->
     <string name="fragment_hos_manage_title" translatable="false">医院管理</string>
+    <string name="create_hospital" translatable="false">新增医院</string>
     <!-- system manager db manage-->
     <string name="fragment_db_manage_title" translatable="false">数据库管理</string>
     <string name="create_db_backup" translatable="false">新建备份</string>

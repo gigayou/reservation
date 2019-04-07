@@ -1,8 +1,6 @@
 package com.giga.ehospital.reservation.manager.sysamdin;
 
-import com.giga.ehospital.ReservationApplication;
 import com.giga.ehospital.reservation.api.sysadmin.DbAPI;
-import com.giga.ehospital.reservation.model.system.BackupDBFileDao;
 import com.giga.ehospital.reservation.net.CustomInterceptor;
 import com.giga.ehospital.reservation.util.ConfigUtil;
 import com.linxiao.framework.manager.BaseDataManager;

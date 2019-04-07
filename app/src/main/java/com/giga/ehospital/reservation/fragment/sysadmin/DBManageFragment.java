@@ -1,7 +1,6 @@
 package com.giga.ehospital.reservation.fragment.sysadmin;
 
 import android.app.ProgressDialog;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,7 +11,6 @@ import android.widget.Toast;
 
 import com.giga.ehospital.ReservationApplication;
 import com.giga.ehospital.reservation.R;
-import com.giga.ehospital.reservation.activity.HomeActivity;
 import com.giga.ehospital.reservation.adapter.sysadmin.DBManageAdapter;
 import com.giga.ehospital.reservation.fragment.standard.StandardWithTobBarLayoutFragment;
 import com.giga.ehospital.reservation.manager.sysamdin.DbDataManager;
@@ -56,7 +54,6 @@ public class DBManageFragment extends StandardWithTobBarLayoutFragment {
     String RESTORING_MESSAGE;
     @BindString(R.string.RESTORE_SUCCESS_MESSAGE)
     String RESTORE_SUCCESS_MESSAGE;
-
 
     private BackupDBFileDao backupDBFileDao;
     private DbDataManager dbDataManager;
@@ -134,11 +131,6 @@ public class DBManageFragment extends StandardWithTobBarLayoutFragment {
         initData();
     }
 
-    private void reloadView() {
-        FragmentActivity activity = getActivity();
-
-    }
-
     /**
      * list
      */
@@ -167,6 +159,7 @@ public class DBManageFragment extends StandardWithTobBarLayoutFragment {
 
     /**
      * backup
+     * 备份成功后会将文件名写入sqlite
      *
      * @param filename backup filename
      */
@@ -222,8 +215,6 @@ public class DBManageFragment extends StandardWithTobBarLayoutFragment {
                 });
     }
 
-
-
     /**
      * 接收服务端的json数据后序列化成BackupDBFile对象列表
      * 然后将这些对象存储到SQLite中
@@ -250,7 +241,7 @@ public class DBManageFragment extends StandardWithTobBarLayoutFragment {
      * 流程：
      *  1.清空本地数据
      *  2.接收服务端数据
-     *  3.存入本都数据
+     *  3.存入本地数据
      *  4.页面显示数据
      */
     protected void initData() {
