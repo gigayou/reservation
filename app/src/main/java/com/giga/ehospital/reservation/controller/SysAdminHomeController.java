@@ -1,8 +1,12 @@
 package com.giga.ehospital.reservation.controller;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +15,23 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
+import com.giga.ehospital.reservation.fragment.home.HealthArticleFragment;
 import com.giga.ehospital.reservation.fragment.sysadmin.DBManageFragment;
 import com.giga.ehospital.reservation.fragment.sysadmin.HosAdminManagerFragment;
 import com.giga.ehospital.reservation.fragment.sysadmin.HosManageFragment;
 import com.giga.ehospital.reservation.fragment.sysadmin.SysSettingManager;
 import com.giga.ehospital.reservation.helper.DialogHelper;
 import com.giga.ehospital.reservation.helper.TipDialogHelper;
+import com.giga.ehospital.reservation.model.vo.HealthArticle;
+import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout;
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 import com.tmall.ultraviewpager.UltraViewPager;
+
+import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -83,6 +93,126 @@ public class SysAdminHomeController extends QMUIWindowInsetLayout {
         initTopBar();
         initRefreshLayout();
         initUltraViewPager();
+        initTabs();
+        initPagers();
+    }
+
+    HashMap<HealthArticleFragment.Pager, View> mPages;
+    HealthArticleFragment.HeadlineRecycleViewAdapter mHeadlineRecycleViewAdapter;
+    HealthArticleFragment.DoctorLectureRecyclerViewAdapter mDoctorLectureRecyclerViewAdapter;
+    List<HealthArticle> mHealthArticles;
+
+    private PagerAdapter mPagerAdapter = new PagerAdapter() {
+
+        private int mChildCount = 0;
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public int getCount() {
+            return mPages.size();
+        }
+
+        @Override
+        public Object instantiateItem(final ViewGroup container, int position) {
+            View page = mPages.get(HealthArticleFragment.Pager.getPagerFromPosition(position));
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            container.addView(page, params);
+            return page;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+//            if (mChildCount == 0) {
+//                return POSITION_NONE;
+//            }
+//            return super.getItemPosition(object);
+            return POSITION_NONE;   // 修复数据刷新但是高度不刷新的异常
+        }
+
+        @Override
+        public void notifyDataSetChanged() {
+            mChildCount = getCount();
+            super.notifyDataSetChanged();
+        }
+    };
+
+    private void initPagers() {
+        mPages = new HashMap<>();
+        RecyclerView mHeadlineRecycleView = new RecyclerView(getContext());
+        RecyclerView mDoctorLectureRecyclerView = new RecyclerView(getContext());
+        mHeadlineRecycleViewAdapter = new HealthArticleFragment.HeadlineRecycleViewAdapter(getContext(), null);
+        mDoctorLectureRecyclerViewAdapter = new HealthArticleFragment.DoctorLectureRecyclerViewAdapter(getContext(), null);
+//        mDoctorLectureRecyclerViewAdapter.setOnItemClickListener((v, pos) -> mContext.startActivity(new Intent(mContext, PlayVideoActivity.class)));
+        mHeadlineRecycleView.setLayoutManager(new LinearLayoutManager(getContext()) {
+            @Override
+            public RecyclerView.LayoutParams generateDefaultLayoutParams() {
+                return new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+        });
+        mHeadlineRecycleView.setAdapter(mHeadlineRecycleViewAdapter);
+        mDoctorLectureRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()) {
+            @Override
+            public RecyclerView.LayoutParams generateDefaultLayoutParams() {
+                return new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                        ViewGroup.LayoutParams.WRAP_CONTENT);
+            }
+        });
+        mDoctorLectureRecyclerView.setAdapter(mDoctorLectureRecyclerViewAdapter);
+
+        mPages.put(HealthArticleFragment.Pager.HEADLINE, mHeadlineRecycleView);
+        mPages.put(HealthArticleFragment.Pager.DOCTOR_LECTURE, mDoctorLectureRecyclerView);
+        mViewPager.setAdapter(mPagerAdapter);
+        mTabSegment.setupWithViewPager(mViewPager, false);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(final int position) {
+                // 切换到当前页面，重置高度
+                mViewPager.requestLayout();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+        mViewPager.setOffscreenPageLimit(mPagerAdapter.getCount());
+    }
+
+    private void initTabs() {
+        int normalColor = QMUIResHelper.getAttrColor(getContext(), R.attr.qmui_config_color_gray_6);
+        int selectColor = QMUIResHelper.getAttrColor(getContext(), R.attr.qmui_config_color_blue);
+        mTabSegment.setDefaultNormalColor(normalColor);
+        mTabSegment.setDefaultSelectedColor(selectColor);
+        mTabSegment.setHasIndicator(true);
+        mTabSegment.setIndicatorPosition(false);
+        mTabSegment.setIndicatorWidthAdjustContent(true);
+        QMUITabSegment.Tab healthArticle = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.ic_crown),
+                ContextCompat.getDrawable(getContext(), R.mipmap.ic_crown_selected),
+                "健康头条", false
+        );
+        QMUITabSegment.Tab doctorLecture = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.ic_hat),
+                ContextCompat.getDrawable(getContext(), R.mipmap.ic_hat_selected),
+                "名医讲堂", false
+        );
+        mTabSegment.addTab(healthArticle);
+        mTabSegment.addTab(doctorLecture);
     }
 
     /**

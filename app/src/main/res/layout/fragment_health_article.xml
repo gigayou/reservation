@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout
+            android:id="@+id/pull_to_refresh"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/scrollview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true"
+                android:scrollbars="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="180dp"
+                            android:background="@color/qmui_config_color_white">
+
+                            <com.tmall.ultraviewpager.UltraViewPager
+                                android:id="@+id/ultraview_pager"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+
+                        </LinearLayout>
+
+                        <!-- 健康头条 新闻,名医讲堂 视频-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <com.qmuiteam.qmui.widget.QMUITabSegment
+                                android:id="@+id/tabs"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/home_tab_height"
+                                android:layout_gravity="start"
+                                android:background="?attr/qmui_list_item_bg_with_border_bottom"
+                                android:textSize="12sp"
+                                app:qmui_tab_icon_position="left" />
+
+                            <!-- 内容 -->
+                            <com.nobitastudio.oss.widget.ScrollByViewpager
+                                android:id="@+id/pagers"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="?attr/app_content_bg_color" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+                        android:id="@+id/topbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fitsSystemWindows="true" />
+                </FrameLayout>
+            </android.support.v4.widget.NestedScrollView>
+        </com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout>
+    </FrameLayout>
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

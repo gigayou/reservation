@@ -36,6 +36,23 @@
 
     <dimen name="px_1">1px</dimen>
 
+    <!-- 原生 -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">2dp</dimen>
+    <dimen name="nav_header_height">255dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="textsize_small">8sp</dimen>
+    <dimen name="textsize_small2">12sp</dimen>
+    <dimen name="textsize_small3">14sp</dimen>
+    <dimen name="textsize_normal">16sp</dimen>
+    <dimen name="textsize_middle">18sp</dimen>
+    <dimen name="textsize_large">20sp</dimen>
+    <dimen name="textsize_morelarge">24sp</dimen>
+    <dimen name="textsize_mostlarge">32sp</dimen>
+    <dimen name="fitsSystemWindows_height">80dp</dimen>
+
+    <!-- dp -->
     <dimen name="dp_8">8dp</dimen>
     <dimen name="dp_12">12dp</dimen>
     <dimen name="dp_16">16dp</dimen>
