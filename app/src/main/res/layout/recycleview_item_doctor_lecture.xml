@@ -35,7 +35,7 @@
                 android:ellipsize="end"
                 android:gravity="start"
                 android:maxLines="2"
-                android:text="新闻标题新闻标题新闻标题标题新闻标题新闻标题"
+                android:text="新闻标题"
                 android:textColor="@color/qmui_config_color_white"
                 android:textSize="@dimen/textsize_morelarge" />
 
@@ -75,7 +75,7 @@
                 android:layout_marginBottom="0dp"
                 android:layout_weight="3"
                 android:gravity="start"
-                android:text="石河子大学医学院"
+                android:text="福建省立医院"
                 android:textColor="?attr/qmui_config_color_gray_1" />
 
             <TextView
@@ -88,7 +88,7 @@
                 android:layout_marginBottom="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="脑科"
+                android:text="男科"
                 android:textColor="?attr/app_primary_color" />
 
             <TextView
@@ -101,10 +101,8 @@
                 android:layout_marginBottom="0dp"
                 android:layout_weight="3"
                 android:gravity="right"
-                android:text="2018-12-11 12:00:10"
+                android:text="2019-04-01 11:11:11"
                 android:textColor="?attr/qmui_config_color_gray_1" />
-
-
         </LinearLayout>
 
 
