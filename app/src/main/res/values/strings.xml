@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name" translatable="false">reservation</string>
-
+    <string name="app_name" translatable="false">易约挂号</string>
+    <string name="slogan" translatable="false">易约挂号  轻松挂号</string>
     <!-- common -->
     <string name="common_example" translatable="false">示例图片</string>
     <string name="app_upgrade_tip_title" translatable="false">Release Notes (%1$s)</string>
@@ -59,6 +59,8 @@
     <string name="row_hos_picture" translatable="false">医院logo：</string>
     <string name="row_hos_invalid" translatable="false">有效性：</string>
     <string name="btn_add" translatable="false">保存</string>
+    <!-- hos modify fragment -->
+    <string name="fragment_hos_modify_title" translatable="false">医院信息</string>
     <!-- system manager db manage-->
     <string name="fragment_db_manage_title" translatable="false">数据库管理</string>
     <string name="create_db_backup" translatable="false">新建备份</string>

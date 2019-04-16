@@ -2,6 +2,7 @@ package com.giga.ehospital.reservation.fragment.sysadmin;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -136,6 +137,12 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
             showMenuDialog(options, (dialog, which) -> {
                 switch (which) {
                     case 0:
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("hospital", hospital);
+                        HosModifyFragment hosModifyFragment = new HosModifyFragment();
+                        hosModifyFragment.setArguments(bundle);
+                        startFragment(hosModifyFragment);
+                        dialog.dismiss();
                         break;
                     case 1:
                         String title = "你确定删除名称为<" + hospital.getHospitalName() + ">的医院信息吗？";
@@ -147,8 +154,27 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
                                 cancleMsg, (dialog1, index) -> {
                                     dialog1.dismiss(); },
                                 confirmMsg, (dialog12, index) -> {
-
-                                },
+                                    final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                                    hosDataManager.delte(hospital)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .doOnSubscribe(disposable -> {
+                                                progressDialog.setMessage(LOADING_MESSAGE);
+                                                progressDialog.show();
+                                            })
+                                            .doOnComplete(() -> progressDialog.dismiss())
+                                            .subscribe(new RxSubscriber<String>() {
+                                                @Override
+                                                public void onNext(String s) {
+                                                    ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                                                    if (response.success()) {
+                                                        Toasty.success(getContext(), "删除成功", Toasty.LENGTH_SHORT, true).show();
+                                                    } else {
+                                                        Toasty.error(getContext(), response.message, Toast.LENGTH_LONG, true).show();
+                                                    }
+                                                }
+                                            });
+                                    dialog12.dismiss(); },
                                 checked);
                         break;
                     case 2:
