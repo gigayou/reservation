@@ -11,10 +11,14 @@ import lombok.Data;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Transient;
 
+import java.io.Serializable;
+
 //@Entity(nameInDb = "buser_info")
 @Entity
 @Data
-public class Buser extends Page implements IPickerViewData {
+public class Buser extends Page implements IPickerViewData, Serializable {
+
+    private static final long serialVersionUID = 6977402643848372812L;
 
     @Id
     @Property(nameInDb = "login_id")

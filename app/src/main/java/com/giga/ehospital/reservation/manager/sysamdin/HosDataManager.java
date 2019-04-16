@@ -58,7 +58,7 @@ public class HosDataManager extends BaseDataManager {
      * @param hospital
      * @return
      */
-    public Observable<String> delte(Hospital hospital) {
+    public Observable<String> delete(Hospital hospital) {
         return hospitalAPI.delete(hospital)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }

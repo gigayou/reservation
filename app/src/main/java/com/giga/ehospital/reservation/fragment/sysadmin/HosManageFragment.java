@@ -1,13 +1,11 @@
 package com.giga.ehospital.reservation.fragment.sysadmin;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -21,13 +19,10 @@ import com.giga.ehospital.reservation.model.hospital.HospitalDao;
 import com.linxiao.framework.common.GsonParser;
 import com.linxiao.framework.net.ApiResponse;
 import com.linxiao.framework.rx.RxSubscriber;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -155,7 +150,7 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
                                     dialog1.dismiss(); },
                                 confirmMsg, (dialog12, index) -> {
                                     final ProgressDialog progressDialog = new ProgressDialog(getContext());
-                                    hosDataManager.delte(hospital)
+                                    hosDataManager.delete(hospital)
                                             .subscribeOn(Schedulers.io())
                                             .observeOn(AndroidSchedulers.mainThread())
                                             .doOnSubscribe(disposable -> {

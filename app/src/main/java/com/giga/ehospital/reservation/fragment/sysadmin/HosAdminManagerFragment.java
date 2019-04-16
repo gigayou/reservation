@@ -1,6 +1,7 @@
 package com.giga.ehospital.reservation.fragment.sysadmin;
 
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +16,8 @@ import com.giga.ehospital.reservation.fragment.standard.StandardWithTobBarLayout
 import com.giga.ehospital.reservation.manager.sysamdin.BuserDataManager;
 import com.giga.ehospital.reservation.model.system.Buser;
 import com.giga.ehospital.reservation.model.system.BuserDao;
+import com.giga.ehospital.reservation.util.ConfigUtil;
+import com.giga.ehospital.reservation.util.ListUtils;
 import com.linxiao.framework.common.GsonParser;
 import com.linxiao.framework.net.ApiResponse;
 import com.linxiao.framework.rx.RxSubscriber;
@@ -22,7 +25,7 @@ import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindString;
@@ -46,13 +49,15 @@ public class HosAdminManagerFragment extends StandardWithTobBarLayoutFragment {
 
     private static Buser tBuser = new Buser();
     private BuserDao buserDao;
-    private BuserDataManager hosAdminDataManager;
+    private BuserDataManager buserDataManager;
     private List<Buser> buserList;
 
     @Override
     protected void initTopBar() {
         super.initTopBar();
-        mTopBar.addRightTextButton(RIGHT_BTN_TITLE, mTopBar.getId()).setOnClickListener(null);
+        mTopBar.addRightTextButton(RIGHT_BTN_TITLE, mTopBar.getId()).setOnClickListener(v -> {
+            startFragment(new HosAdminAddFragment());
+        });
     }
 
     @Override
@@ -70,8 +75,8 @@ public class HosAdminManagerFragment extends StandardWithTobBarLayoutFragment {
         if (buserDao == null) {
             buserDao = ReservationApplication.getInstances().getDaoSession().getBuserDao();
         }
-        if (hosAdminDataManager == null) {
-            hosAdminDataManager = new BuserDataManager();
+        if (buserDataManager == null) {
+            buserDataManager = new BuserDataManager();
         }
         initData();
     }
@@ -98,13 +103,59 @@ public class HosAdminManagerFragment extends StandardWithTobBarLayoutFragment {
         adapter.setOnItemClickListener((itemView, pos) -> {
 
             Buser buser = buserList.get(pos);
-            String dialogTitle = buser.getUserName();
-            String dialogContent = buser.getLoginId();
-            showMessagePositiveDialog(dialogTitle, dialogContent,
-                    "取消", (dialog, index) -> {dialog.dismiss();},
-                    "关闭", (dialog, index) -> {
+            final String[] items = new String[]{"查看", "删除", "取消"};
+            List<String> options = Arrays.asList(items);
+            showMenuDialog(options, (dialog, which) -> {
+                switch (which) {
+                    case 0:
+                        HosAdminModifyFragment hosAdminModifyFragment = new HosAdminModifyFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("hosadmin", buser);
+                        hosAdminModifyFragment.setArguments(bundle);
+                        startFragment(hosAdminModifyFragment);
                         dialog.dismiss();
-                    });
+                        break;
+                    case 1:
+                        String title = "你确定删除名称为<" + buser.getUserName() + ">的医院管理员信息吗？";
+                        String content = "确定删除";
+                        String cancleMsg = "取消";
+                        String confirmMsg = "确定";
+                        boolean checked = true;
+                        showConfirmMessageDialog(title, content,
+                                cancleMsg, (dialog1, index) -> {
+                                    dialog1.dismiss(); },
+                                confirmMsg, (dialog12, index) -> {
+                                    final ProgressDialog progressDialog = new ProgressDialog(getContext());
+                                    buserDataManager.delete(buser)
+                                            .subscribeOn(Schedulers.io())
+                                            .observeOn(AndroidSchedulers.mainThread())
+                                            .doOnSubscribe(disposable -> {
+                                                progressDialog.setMessage(LOADING_MESSAGE);
+                                                progressDialog.show();
+                                            })
+                                            .doOnComplete(() -> progressDialog.dismiss())
+                                            .subscribe(new RxSubscriber<String>() {
+                                                @Override
+                                                public void onNext(String s) {
+                                                    ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                                                    if (response.success()) {
+                                                        Toasty.success(getContext(), "删除成功", Toasty.LENGTH_SHORT, true).show();
+                                                    } else {
+                                                        Toasty.error(getContext(), response.message, Toast.LENGTH_LONG, true).show();
+                                                    }
+                                                }
+                                            });
+                                    dialog12.dismiss(); },
+                                checked);
+                        dialog.dismiss();
+                        break;
+                    case 2:
+                        dialog.dismiss();
+                        break;
+                    default:
+                        break;
+                }
+            });
         });
         mHosAdminManageRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         mHosAdminManageRecyclerView.setAdapter(adapter);
@@ -116,7 +167,7 @@ public class HosAdminManagerFragment extends StandardWithTobBarLayoutFragment {
 
     private void rxReceiveJsonData() {
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        hosAdminDataManager.list(tBuser)
+        buserDataManager.list(tBuser)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .doOnSubscribe(disposable -> {
@@ -146,14 +197,9 @@ public class HosAdminManagerFragment extends StandardWithTobBarLayoutFragment {
     private void dumpAllData(String json) {
         JSONArray jsonArray = GsonParser.fromJSONObject(json, JSONArray.class);
         List<Buser> busers = GsonParser.fromJSONArray(jsonArray, Buser.class);
-        List<Buser> showBusers = new ArrayList<Buser>();
-        for (Buser buser : busers) {
-            if (buser.getRoleId() == 2) {
-                showBusers.add(buser);
-            }
-        }
+        List<Buser> hosAdmins = ListUtils.filter(busers, buser -> buser.getRoleId() == ConfigUtil.ROLE_HOS_ADMIN);
         buserDao.deleteAll();
-        buserDao.insertInTx(showBusers);
+        buserDao.insertInTx(hosAdmins);
     }
 
     @Override

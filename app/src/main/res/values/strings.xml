@@ -66,6 +66,12 @@
     <string name="create_db_backup" translatable="false">新建备份</string>
     <!-- system manager hosadmin manage -->
     <string name="fragment_hosadmin_manage_title" translatable="false">医院管理员管理</string>
+    <!-- hosadmin add fragment -->
+    <string name="fragment_hosadmin_add_title" translatable="false">添加医院管理员</string>
+    <string name="fragment_hosadmin_modify_title" translatable="false">管理员信息</string>
+    <string name="row_hosadmin_loginid" translatable="false">账号：</string>
+    <string name="row_hosadmin_username" translatable="false">用户名：</string>
+    <string name="row_hosadmin_loginpwd" translatable="false">密码：</string>
 
     <!-- hospital manager home -->
     <string name="hosm_manage_hosinfo" translatable="false">医院信息管理</string>
