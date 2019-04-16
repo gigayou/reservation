@@ -20,13 +20,13 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 
-public class HosAdminDataManager extends BaseDataManager {
+public class BuserDataManager extends BaseDataManager {
 
     private static String URL = ConfigUtil.URL;
 
     private BuserAPI buserAPI;
 
-    public HosAdminDataManager() {
+    public BuserDataManager() {
 
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
 //        okBuilder.cookieJar(RetrofitManager.());

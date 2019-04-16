@@ -26,18 +26,8 @@ public class Hospital extends Page {
     private String hospitalName;
     @Property(nameInDb = "hospital_grade")
     private String hospitalGrade;
-    @Property(nameInDb = "province")
-    private String province;
-    @Property(nameInDb = "province_name")
-    private String provinceName;
-    @Property(nameInDb = "city")
-    private String city;
-    @Property(nameInDb = "city_name")
-    private String cityName;
-    @Property(nameInDb = "county")
-    private String county;
-    @Property(nameInDb = "county_name")
-    private String countyName;
+    @Property(nameInDb = "hospital_addr")
+    private String hospitalAddr;
     @Property(nameInDb = "detail_addr")
     private String detailAddr;
     @Property(nameInDb = "hospital_phone")
@@ -48,23 +38,17 @@ public class Hospital extends Page {
     private String isValid;
     @Property(nameInDb = "hospital_picture")
     private String hospitalPicture;
-    @Generated(hash = 195423734)
+    @Generated(hash = 2008717252)
     public Hospital(String hospitalId, String hospitalManager, String managerName,
-            String hospitalName, String hospitalGrade, String province,
-            String provinceName, String city, String cityName, String county,
-            String countyName, String detailAddr, String hospitalPhone,
-            String introduction, String isValid, String hospitalPicture) {
+            String hospitalName, String hospitalGrade, String hospitalAddr,
+            String detailAddr, String hospitalPhone, String introduction,
+            String isValid, String hospitalPicture) {
         this.hospitalId = hospitalId;
         this.hospitalManager = hospitalManager;
         this.managerName = managerName;
         this.hospitalName = hospitalName;
         this.hospitalGrade = hospitalGrade;
-        this.province = province;
-        this.provinceName = provinceName;
-        this.city = city;
-        this.cityName = cityName;
-        this.county = county;
-        this.countyName = countyName;
+        this.hospitalAddr = hospitalAddr;
         this.detailAddr = detailAddr;
         this.hospitalPhone = hospitalPhone;
         this.introduction = introduction;
@@ -104,42 +88,6 @@ public class Hospital extends Page {
     public void setHospitalGrade(String hospitalGrade) {
         this.hospitalGrade = hospitalGrade;
     }
-    public String getProvince() {
-        return this.province;
-    }
-    public void setProvince(String province) {
-        this.province = province;
-    }
-    public String getProvinceName() {
-        return this.provinceName;
-    }
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
-    }
-    public String getCity() {
-        return this.city;
-    }
-    public void setCity(String city) {
-        this.city = city;
-    }
-    public String getCityName() {
-        return this.cityName;
-    }
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-    public String getCounty() {
-        return this.county;
-    }
-    public void setCounty(String county) {
-        this.county = county;
-    }
-    public String getCountyName() {
-        return this.countyName;
-    }
-    public void setCountyName(String countyName) {
-        this.countyName = countyName;
-    }
     public String getDetailAddr() {
         return this.detailAddr;
     }
@@ -169,6 +117,12 @@ public class Hospital extends Page {
     }
     public void setHospitalPicture(String hospitalPicture) {
         this.hospitalPicture = hospitalPicture;
+    }
+    public String getHospitalAddr() {
+        return this.hospitalAddr;
+    }
+    public void setHospitalAddr(String hospitalAddr) {
+        this.hospitalAddr = hospitalAddr;
     }
 
 }

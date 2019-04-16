@@ -87,9 +87,11 @@ dependencies {
     // greendao
     implementation 'org.greenrobot:greendao:3.2.2'
 
-    //
-    //noinspection GradleCompatible
+    // noinspection GradleCompatible
     implementation 'com.android.support:cardview-v7:21.+'
-    //noinspection GradleCompatible
+    // noinspection GradleCompatible
     implementation 'com.android.support:recyclerview-v7:21.+'
+
+    // picker-view
+    implementation 'com.contrarywind:Android-PickerView:4.1.7'
 }

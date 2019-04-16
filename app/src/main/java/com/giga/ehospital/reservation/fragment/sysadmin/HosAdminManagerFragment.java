@@ -12,7 +12,7 @@ import com.giga.ehospital.ReservationApplication;
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.adapter.sysadmin.HosAdminManageAdapter;
 import com.giga.ehospital.reservation.fragment.standard.StandardWithTobBarLayoutFragment;
-import com.giga.ehospital.reservation.manager.sysamdin.HosAdminDataManager;
+import com.giga.ehospital.reservation.manager.sysamdin.BuserDataManager;
 import com.giga.ehospital.reservation.model.system.Buser;
 import com.giga.ehospital.reservation.model.system.BuserDao;
 import com.linxiao.framework.common.GsonParser;
@@ -46,7 +46,7 @@ public class HosAdminManagerFragment extends StandardWithTobBarLayoutFragment {
 
     private static Buser tBuser = new Buser();
     private BuserDao buserDao;
-    private HosAdminDataManager hosAdminDataManager;
+    private BuserDataManager hosAdminDataManager;
     private List<Buser> buserList;
 
     @Override
@@ -71,7 +71,7 @@ public class HosAdminManagerFragment extends StandardWithTobBarLayoutFragment {
             buserDao = ReservationApplication.getInstances().getDaoSession().getBuserDao();
         }
         if (hosAdminDataManager == null) {
-            hosAdminDataManager = new HosAdminDataManager();
+            hosAdminDataManager = new BuserDataManager();
         }
         initData();
     }

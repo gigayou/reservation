@@ -1,10 +1,12 @@
 package com.giga.ehospital.reservation.fragment.sysadmin;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -18,10 +20,14 @@ import com.giga.ehospital.reservation.model.hospital.HospitalDao;
 import com.linxiao.framework.common.GsonParser;
 import com.linxiao.framework.net.ApiResponse;
 import com.linxiao.framework.rx.RxSubscriber;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 
 import org.json.JSONArray;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindString;
@@ -54,7 +60,9 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
     @Override
     protected void initTopBar() {
         super.initTopBar();
-        mTopBar.addRightTextButton(RIGHT_BTN_TITLE, mTopBar.getId()).setOnClickListener(null);
+        mTopBar.addRightTextButton(RIGHT_BTN_TITLE, mTopBar.getId()).setOnClickListener(v -> {
+            startFragment(new HosAddFragment());
+        });
     }
 
 
@@ -123,13 +131,33 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
         adapter.setOnItemClickListener((itemView, pos) -> {
 
             Hospital hospital = hospitalList.get(pos);
-            String dialogTitle = hospital.getHospitalName();
-            String dialogContent = hospital.getDetailAddr();
-            showMessagePositiveDialog(dialogTitle, dialogContent,
-                    "取消", (dialog, index) -> {dialog.dismiss();},
-                    "关闭", (dialog, index) -> {
+            final String[] items = new String[]{"查看", "删除", "取消"};
+            List<String> options = Arrays.asList(items);
+            showMenuDialog(options, (dialog, which) -> {
+                switch (which) {
+                    case 0:
+                        break;
+                    case 1:
+                        String title = "你确定删除名称为<" + hospital.getHospitalName() + ">的医院信息吗？";
+                        String content = "确定删除";
+                        String cancleMsg = "取消";
+                        String confirmMsg = "确定";
+                        boolean checked = true;
+                        showConfirmMessageDialog(title, content,
+                                cancleMsg, (dialog1, index) -> {
+                                    dialog1.dismiss(); },
+                                confirmMsg, (dialog12, index) -> {
+
+                                },
+                                checked);
+                        break;
+                    case 2:
                         dialog.dismiss();
-                    });
+                        break;
+                    default:
+                        break;
+                }
+            });
         });
         mHosManageRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(),DividerItemDecoration.VERTICAL));
         mHosManageRecyclerView.setAdapter(adapter);

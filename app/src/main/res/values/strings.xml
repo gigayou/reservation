@@ -47,6 +47,18 @@
     <string name="sysm_system_setting" translatable="false">系统设置</string>
     <!-- system manager hos manage-->
     <string name="fragment_hos_manage_title" translatable="false">医院管理</string>
+    <!-- hos add fragment -->
+    <string name="fragment_hos_add_title" translatable="false">新增医院</string>
+    <string name="row_hos_manager" translatable="false">医院管理员：</string>
+    <string name="row_hos_name" translatable="false">医院名称：</string>
+    <string name="row_hos_grade" translatable="false">医院级别：</string>
+    <string name="row_hos_addr" translatable="false">地址：</string>
+    <string name="row_hos_detailaddr" translatable="false">详细地址：</string>
+    <string name="row_hos_phone" translatable="false">联系方式：</string>
+    <string name="row_hos_introduction" translatable="false">医院介绍：</string>
+    <string name="row_hos_picture" translatable="false">医院logo：</string>
+    <string name="row_hos_invalid" translatable="false">有效性：</string>
+    <string name="btn_add" translatable="false">保存</string>
     <!-- system manager db manage-->
     <string name="fragment_db_manage_title" translatable="false">数据库管理</string>
     <string name="create_db_backup" translatable="false">新建备份</string>

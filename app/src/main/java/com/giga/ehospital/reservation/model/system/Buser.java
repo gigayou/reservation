@@ -1,5 +1,6 @@
 package com.giga.ehospital.reservation.model.system;
 
+import com.contrarywind.interfaces.IPickerViewData;
 import com.giga.ehospital.reservation.model.base.Page;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -13,7 +14,7 @@ import org.greenrobot.greendao.annotation.Transient;
 //@Entity(nameInDb = "buser_info")
 @Entity
 @Data
-public class Buser extends Page {
+public class Buser extends Page implements IPickerViewData {
 
     @Id
     @Property(nameInDb = "login_id")
@@ -67,5 +68,10 @@ public class Buser extends Page {
     }
     public void setLoginPwd(String loginPwd) {
         this.loginPwd = loginPwd;
+    }
+
+    @Override
+    public String getPickerViewText() {
+        return userName;
     }
 }
