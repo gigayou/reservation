@@ -1,25 +1,40 @@
 package com.giga.ehospital.reservation.fragment.home;
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.fragment.BaseFragment;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
+import com.giga.ehospital.reservation.container.NormalContainer;
 import com.giga.ehospital.reservation.controller.HosAdminHomeController;
 import com.giga.ehospital.reservation.controller.HosAdminInfoController;
 import com.giga.ehospital.reservation.controller.HosAdminMineController;
+import com.giga.ehospital.reservation.manager.sysamdin.HosDataManager;
+import com.giga.ehospital.reservation.model.hospital.Hospital;
+import com.linxiao.framework.common.GsonParser;
+import com.linxiao.framework.net.ApiResponse;
+import com.linxiao.framework.rx.RxSubscriber;
 import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
-import java.util.HashMap;
 
+import java.util.HashMap;
+import java.util.List;
+
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class HosAdminHomeFragment extends BaseFragment {
 
@@ -27,16 +42,63 @@ public class HosAdminHomeFragment extends BaseFragment {
     ViewPager mViewPager;
     @BindView(R.id.fragment_tabs)
     QMUITabSegment mTabSegment;
+    @BindString(R.string.LOADING_MESSAGE)
+    String LOADING_MESSAGE;
+    @BindString(R.string.SUCCESS_MESSAGE)
+    String SUCCESS_MESSAGE;
+
+    private Hospital tHospital = new Hospital();
 
     private HashMap<Pager, View> mPages;
+    private String userId;
+    public HosDataManager hosDataManager;
 
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_hosadmin, null);
         ButterKnife.bind(this, root);
+        initUserId();
+        initHosDataManager();
+        initHospital();
         initTabs();
         initPagers();
         return root;
+    }
+
+    private void initUserId() {
+        Bundle arguments = this.getArguments();
+        userId = arguments.getString("userId");
+    }
+
+    private void initHosDataManager() {
+        hosDataManager = new HosDataManager();
+    }
+
+    private void initHospital() {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        hosDataManager.list(tHospital)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    progressDialog.setMessage(LOADING_MESSAGE);
+                    progressDialog.show();
+                })
+                .doOnComplete(() -> progressDialog.dismiss())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                        if (response.success()) {
+                            List<Hospital> hospitals = GsonParser.fromJSONArray(response.data, Hospital.class);
+                            for (Hospital hospital : hospitals) {
+                                if (hospital.getHospitalManager().equals(userId))
+                                    NormalContainer.put(NormalContainer.HOSPITAL, hospital);
+                            }
+                        } else {
+                            Toasty.error(getContext(),response.message, Toast.LENGTH_LONG, true).show();
+                        }
+                    }
+                });
     }
 
     /**

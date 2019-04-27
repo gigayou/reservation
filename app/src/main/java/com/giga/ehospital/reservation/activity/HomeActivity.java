@@ -19,11 +19,12 @@ public class HomeActivity extends BaseFragmentActvity {
 
     private long exitTime = 0;
     private int roleId = 0;
+    private String userId = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        roleId = receiveBundle();
+        receiveBundle();
         if (savedInstanceState == null) {
             BaseFragment fragment = getFirstFragment(roleId);
             getSupportFragmentManager()
@@ -40,10 +41,11 @@ public class HomeActivity extends BaseFragmentActvity {
         NormalContainer.container.put(NormalContainer.SELECTED_ACTIVITY,this);
     }
 
-    private int receiveBundle() {
+    private void receiveBundle() {
         Intent intent = getIntent();
         Bundle bundle = intent.getBundleExtra("message");
-        return bundle.getInt("roleId");
+        roleId = bundle.getInt("roleId");
+        userId = bundle.getString("userId");
     }
 
     @Override
@@ -57,15 +59,25 @@ public class HomeActivity extends BaseFragmentActvity {
      * @return BaseFragment impl
      */
     protected BaseFragment getFirstFragment(int roleId) {
+        Bundle bundle = new Bundle();
+        bundle.putString("userId", userId);
         switch (roleId) {
             case -1:
-                return new PatientHomeFragment();
+                PatientHomeFragment patientHomeFragment = new PatientHomeFragment();
+                patientHomeFragment.setArguments(bundle);
+                return patientHomeFragment;
             case 1:
-                return new SysAdminHomeFragment();
+                SysAdminHomeFragment sysAdminHomeFragment = new SysAdminHomeFragment();
+                sysAdminHomeFragment.setArguments(bundle);
+                return sysAdminHomeFragment;
             case 2:
-                return new HosAdminHomeFragment();
+                HosAdminHomeFragment hosAdminHomeFragment = new HosAdminHomeFragment();
+                hosAdminHomeFragment.setArguments(bundle);
+                return hosAdminHomeFragment;
             case 3:
-                return new DoctorHomeFragment();
+                DoctorHomeFragment doctorHomeFragment = new DoctorHomeFragment();
+                doctorHomeFragment.setArguments(bundle);
+                return doctorHomeFragment;
             default:
                 return null;
         }

@@ -1,7 +1,7 @@
-package com.giga.ehospital.reservation.manager.sysamdin;
+package com.giga.ehospital.reservation.manager.hosadmin;
 
-import com.giga.ehospital.reservation.api.HospitalAPI;
-import com.giga.ehospital.reservation.model.hospital.Hospital;
+import com.giga.ehospital.reservation.api.DepartmentTypeAPI;
+import com.giga.ehospital.reservation.model.code.DepartmentType;
 import com.giga.ehospital.reservation.net.CustomInterceptor;
 import com.giga.ehospital.reservation.util.ConfigUtil;
 import com.linxiao.framework.manager.BaseDataManager;
@@ -18,13 +18,13 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HosDataManager extends BaseDataManager {
+public class DepTypeDataManager extends BaseDataManager {
 
     private static String URL = ConfigUtil.URL;
 
-    private HospitalAPI hospitalAPI;
+    private DepartmentTypeAPI departmentTypeAPI;
 
-    public HosDataManager() {
+    public DepTypeDataManager() {
 
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
 //        okBuilder.cookieJar(RetrofitManager.());
@@ -38,94 +38,89 @@ public class HosDataManager extends BaseDataManager {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create());
 
-        hospitalAPI = builder.build().create(HospitalAPI.class);
+        departmentTypeAPI = builder.build().create(DepartmentTypeAPI.class);
     }
 
     /**
-     * 添加医院信息
+     * 新增科室类型
      *
-     * @param hospital
+     * @param departmentType
      * @return
      */
-    public Observable<String> add(Hospital hospital) {
-        return hospitalAPI.add(hospital)
-                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
-    }
-
-    /**
-     * 删除医院信息
-     *
-     * @param hospital
-     * @return
-     */
-    public Observable<String> delete(Hospital hospital) {
-        return hospitalAPI.delete(hospital)
-                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
-    }
-
-    /**
-     * 批量删除医院信息
-     *
-     * @param hospitalList
-     * @return
-     */
-    public Observable<String> deleteList(List<Hospital> hospitalList) {
-        return hospitalAPI.deleteList(hospitalList)
-                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
-    }
-
-    /**
-     * 查询指定医院的所有科室信息
-     *
-     * @param hospital
-     * @return
-     */
-    public Observable<String> deptType(Hospital hospital) {
-        return hospitalAPI.deptType(hospital)
-                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
-    }
-
-    /**
-     * 查询指定医院的详细信息
-     *
-     * @param hospital
-     * @return
-     */
-    public Observable<String> detail(Hospital hospital) {
-        return hospitalAPI.detail(hospital)
-                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
-    }
-
-    /**
-     * 显示所有医院信息
-     *
-     * @return
-     */
-    public Observable<String> list(Hospital hospital) {
-        return hospitalAPI.list(hospital)
+    public Observable<String> add(DepartmentType departmentType) {
+        return departmentTypeAPI.add(departmentType)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }
 
 
     /**
-     * 分页显示所有医院信息
+     * 删除科室类型
      *
+     * @param departmentType
      * @return
      */
-    public Observable<String> pageList(Hospital hospital) {
-        return hospitalAPI.pageList(hospital)
+    public Observable<String> delete(DepartmentType departmentType) {
+        return departmentTypeAPI.delete(departmentType)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }
+
 
     /**
-     * 更新医院信息
+     * 批量删除科室信息
      *
-     * @param hospital
+     * @param departmentTypeList
      * @return
      */
-    public Observable<String> update(Hospital hospital) {
-        return hospitalAPI.update(hospital)
+    public Observable<String> deleteList(List<DepartmentType> departmentTypeList) {
+        return departmentTypeAPI.deleteList(departmentTypeList)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }
 
+
+    /**
+     * 显示科室信息详情
+     *
+     * @param departmentType
+     * @return
+     */
+    public Observable<String> detail(DepartmentType departmentType) {
+        return departmentTypeAPI.detail(departmentType)
+                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
+    }
+
+
+    /**
+     * 显示所有科室类型信息
+     *
+     * @param departmentType
+     * @return
+     */
+    public Observable<String> list(DepartmentType departmentType) {
+        return departmentTypeAPI.list(departmentType)
+                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
+    }
+
+
+    /**
+     * 分页显示所有科室类型信息
+     *
+     * @param departmentType
+     * @return
+     */
+    public Observable<String> pageList(DepartmentType departmentType) {
+        return departmentTypeAPI.pageList(departmentType)
+                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
+    }
+
+
+    /**
+     * 更新科室类型信息
+     *
+     * @param departmentType
+     * @return
+     */
+    public Observable<String> update(DepartmentType departmentType) {
+        return departmentTypeAPI.update(departmentType)
+                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
+    }
 }

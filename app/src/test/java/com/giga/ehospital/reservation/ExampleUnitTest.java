@@ -24,6 +24,7 @@ public class ExampleUnitTest {
         for (String s : split) {
             sb.append(s);
         }
-        System.out.println(sb.toString().substring(0,21).length());
+        System.out.println(sb.toString().substring(0,20));
+//        System.out.println(sb.toString().substring(0,21).length());
     }
 }

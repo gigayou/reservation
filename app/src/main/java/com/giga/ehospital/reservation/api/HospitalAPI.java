@@ -9,6 +9,7 @@ import okhttp3.ResponseBody;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * 医院管理接口
@@ -89,4 +90,5 @@ public interface HospitalAPI {
      */
     @POST("/hospital/hospital/update")
     Observable<ResponseBody> update(@Body Hospital hospital);
+
 }

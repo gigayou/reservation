@@ -9,10 +9,14 @@ import org.greenrobot.greendao.annotation.Property;
 import lombok.Data;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 //@Entity(nameInDb = "doctor_info")
 @Entity
 @Data
-public class Doctor extends Page {
+public class Doctor extends Page implements Serializable {
+
+    private static final long serialVersionUID = 6977402643855467865L;
 
     @Id
     @Property(nameInDb = "doctor_id")
@@ -28,7 +32,7 @@ public class Doctor extends Page {
     @Property(nameInDb = "doctor_name")
     private String doctorName;
     @Property(nameInDb = "sex")
-    private String sex;
+    private Integer sex;
     @Property(nameInDb = "doctor_title")
     private String doctorTitle;
     @Property(nameInDb = "skill")
@@ -41,9 +45,9 @@ public class Doctor extends Page {
     private String loginId;
     @Property(nameInDb = "login_pwd")
     private String loginPwd;
-    @Generated(hash = 952717990)
+    @Generated(hash = 474076781)
     public Doctor(String doctorId, String hospitalId, String hospitalName,
-            Long typeId, String typeName, String doctorName, String sex,
+            Long typeId, String typeName, String doctorName, Integer sex,
             String doctorTitle, String skill, String introduction,
             String doctorPhoto, String loginId, String loginPwd) {
         this.doctorId = doctorId;
@@ -99,10 +103,10 @@ public class Doctor extends Page {
     public void setDoctorName(String doctorName) {
         this.doctorName = doctorName;
     }
-    public String getSex() {
+    public Integer getSex() {
         return this.sex;
     }
-    public void setSex(String sex) {
+    public void setSex(Integer sex) {
         this.sex = sex;
     }
     public String getDoctorTitle() {

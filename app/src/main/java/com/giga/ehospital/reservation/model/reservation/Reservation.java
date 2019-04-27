@@ -10,8 +10,8 @@ import org.greenrobot.greendao.annotation.ToOne;
 import lombok.Data;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
-import com.giga.ehospital.reservation.model.system.DaoSession;
 import com.giga.ehospital.reservation.model.hospital.CalendarDao;
+import com.giga.ehospital.reservation.model.code.DaoSession;
 
 //@Entity(nameInDb = "reservation_info")
 @Entity

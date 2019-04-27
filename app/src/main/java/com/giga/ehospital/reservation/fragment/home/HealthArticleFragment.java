@@ -63,7 +63,7 @@ public class HealthArticleFragment extends StandardWithTobBarLayoutFragment {
 
         @Override
         public void bindData(RecyclerViewHolder holder, int position, HealthArticle item) {
-            Glide.with(mContext).load(R.drawable.bg_hospital_trademark).into(holder.getImageView(R.id.cover_imageView));
+            Glide.with(mContext).load(R.drawable.article_img).into(holder.getImageView(R.id.cover_imageView));
 //            holder.setText(R.id.title_textView, item.getTitle());
 //            holder.setText(R.id.type_textView, item.getType().name());
 //            holder.setText(R.id.publish_time_textView, CommonUtil.handleHealthNewsPublishTime(DateUtil.formatLocalDateTimeToSimpleString(item.getPublishTime())));

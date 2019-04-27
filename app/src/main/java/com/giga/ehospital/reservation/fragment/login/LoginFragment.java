@@ -73,8 +73,7 @@ public class LoginFragment extends BaseFragment {
                 if (username.length() == 11) {
                     userLogin(username, password);
                 } else {
-                    displayHomeView(1);
-//                    buserLogin(username, password);
+                    buserLogin(username, password);
                 }
                 break;
             case R.id.btn_register:
@@ -88,12 +87,13 @@ public class LoginFragment extends BaseFragment {
     }
 
 
-    private void displayHomeView(int roleId) {
+    private void displayHomeView(int roleId, String userId) {
         Intent intent = new Intent(getActivity(), HomeActivity.class);
         Bundle bundle = new Bundle();
         // 设置标记为不可返回
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         bundle.putInt("roleId", roleId);
+        bundle.putString("userId", userId);
         intent.putExtra("message", bundle);
         startActivity(intent);
     }
@@ -161,7 +161,7 @@ public class LoginFragment extends BaseFragment {
                         ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
                         if (response.success()) {
                             Toasty.success(getContext(), SUCCESS_MESSAGE, Toast.LENGTH_SHORT, true).show();
-                            displayHomeView(-1);
+                            displayHomeView(-1, username);
                         } else {
                             Toasty.error(getContext(),response.message, Toast.LENGTH_LONG, true).show();
                         }
@@ -204,7 +204,7 @@ public class LoginFragment extends BaseFragment {
                                 e.printStackTrace();
                             }
                             Toasty.success(getContext(), SUCCESS_MESSAGE, Toast.LENGTH_SHORT, true).show();
-                            displayHomeView(roleId);
+                            displayHomeView(roleId, username);
                         } else {
                             Toasty.error(getContext(), response.message, Toast.LENGTH_LONG, true).show();
                         }

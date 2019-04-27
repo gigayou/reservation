@@ -1,5 +1,6 @@
 package com.giga.ehospital.reservation.model.code;
 
+import com.contrarywind.interfaces.IPickerViewData;
 import com.giga.ehospital.reservation.model.base.Page;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -9,10 +10,15 @@ import org.greenrobot.greendao.annotation.Property;
 import lombok.Data;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 //@Entity(nameInDb = "department_code")
 @Entity
 @Data
-public class DepartmentType extends Page {
+public class DepartmentType extends Page implements IPickerViewData, Serializable {
+
+    private static final long serialVersionUID = 6977402643899876678L;
+
     @Id
     @Property(nameInDb = "department_type_id")
     private Long departmentTypeId;
@@ -47,5 +53,10 @@ public class DepartmentType extends Page {
     }
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    @Override
+    public String getPickerViewText() {
+        return departmentTypeName;
     }
 }

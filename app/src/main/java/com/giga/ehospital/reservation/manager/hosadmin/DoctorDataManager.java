@@ -1,7 +1,7 @@
-package com.giga.ehospital.reservation.manager.sysamdin;
+package com.giga.ehospital.reservation.manager.hosadmin;
 
-import com.giga.ehospital.reservation.api.HospitalAPI;
-import com.giga.ehospital.reservation.model.hospital.Hospital;
+import com.giga.ehospital.reservation.api.DoctorAPI;
+import com.giga.ehospital.reservation.model.hospital.Doctor;
 import com.giga.ehospital.reservation.net.CustomInterceptor;
 import com.giga.ehospital.reservation.util.ConfigUtil;
 import com.linxiao.framework.manager.BaseDataManager;
@@ -18,13 +18,13 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class HosDataManager extends BaseDataManager {
+public class DoctorDataManager extends BaseDataManager {
 
     private static String URL = ConfigUtil.URL;
 
-    private HospitalAPI hospitalAPI;
+    private DoctorAPI doctorAPI;
 
-    public HosDataManager() {
+    public DoctorDataManager() {
 
         OkHttpClient.Builder okBuilder = new OkHttpClient.Builder();
 //        okBuilder.cookieJar(RetrofitManager.());
@@ -38,93 +38,85 @@ public class HosDataManager extends BaseDataManager {
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create());
 
-        hospitalAPI = builder.build().create(HospitalAPI.class);
+        doctorAPI = builder.build().create(DoctorAPI.class);
     }
 
     /**
-     * 添加医院信息
+     * 新增医生信息
      *
-     * @param hospital
+     * @param doctor
      * @return
      */
-    public Observable<String> add(Hospital hospital) {
-        return hospitalAPI.add(hospital)
+    public Observable<String> add(Doctor doctor) {
+        return doctorAPI.add(doctor)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }
 
     /**
-     * 删除医院信息
+     * 删除医生信息
      *
-     * @param hospital
+     * @param doctor
      * @return
      */
-    public Observable<String> delete(Hospital hospital) {
-        return hospitalAPI.delete(hospital)
-                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
-    }
-
-    /**
-     * 批量删除医院信息
-     *
-     * @param hospitalList
-     * @return
-     */
-    public Observable<String> deleteList(List<Hospital> hospitalList) {
-        return hospitalAPI.deleteList(hospitalList)
-                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
-    }
-
-    /**
-     * 查询指定医院的所有科室信息
-     *
-     * @param hospital
-     * @return
-     */
-    public Observable<String> deptType(Hospital hospital) {
-        return hospitalAPI.deptType(hospital)
-                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
-    }
-
-    /**
-     * 查询指定医院的详细信息
-     *
-     * @param hospital
-     * @return
-     */
-    public Observable<String> detail(Hospital hospital) {
-        return hospitalAPI.detail(hospital)
-                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
-    }
-
-    /**
-     * 显示所有医院信息
-     *
-     * @return
-     */
-    public Observable<String> list(Hospital hospital) {
-        return hospitalAPI.list(hospital)
+    public Observable<String> delete(Doctor doctor) {
+        return doctorAPI.delete(doctor)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }
 
 
     /**
-     * 分页显示所有医院信息
+     * 批量删除医生信息
      *
+     * @param doctorList
      * @return
      */
-    public Observable<String> pageList(Hospital hospital) {
-        return hospitalAPI.pageList(hospital)
+    public Observable<String> deleteList(List<Doctor> doctorList) {
+        return doctorAPI.deleteList(doctorList)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }
 
     /**
-     * 更新医院信息
+     * 医生详细信息
      *
-     * @param hospital
+     * @param doctor
      * @return
      */
-    public Observable<String> update(Hospital hospital) {
-        return hospitalAPI.update(hospital)
+    public Observable<String> detail(Doctor doctor) {
+        return doctorAPI.detail(doctor)
+                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
+    }
+
+    /**
+     * 显示所有医生信息
+     *
+     * @param doctor
+     * @return
+     */
+    public Observable<String> list(Doctor doctor) {
+        return doctorAPI.list(doctor)
+                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
+    }
+
+    /**
+     * 分页显示所有医生信息
+     *
+     * @param doctor
+     * @return
+     */
+    public Observable<String> pageList(Doctor doctor) {
+        return doctorAPI.pageList(doctor)
+                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
+    }
+
+
+    /**
+     * 更新医生信息
+     *
+     * @param doctor
+     * @return
+     */
+    public Observable<String> update(Doctor doctor) {
+        return doctorAPI.update(doctor)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }
 

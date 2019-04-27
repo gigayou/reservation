@@ -6,8 +6,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.giga.ehospital.reservation.base.manager.QDUpgradeManager;
-import com.giga.ehospital.reservation.model.system.DaoMaster;
-import com.giga.ehospital.reservation.model.system.DaoSession;
+import com.giga.ehospital.reservation.model.code.DaoMaster;
+import com.giga.ehospital.reservation.model.code.DaoSession;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.squareup.leakcanary.LeakCanary;
 
@@ -28,12 +28,13 @@ public class ReservationApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        LeakCanary.install(this);
+
         context = getApplicationContext();
         instances = this;
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
-        LeakCanary.install(this);
 
         QDUpgradeManager.getInstance(this).check();
         QMUISwipeBackActivityManager.init(this);

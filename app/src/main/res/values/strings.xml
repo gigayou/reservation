@@ -79,6 +79,30 @@
     <string name="hosm_manage_doctor" translatable="false">医疗专家管理</string>
     <string name="hosm_mange_reservation" translatable="false">挂号设置管理</string>
     <string name="hosm_manage_dataexcel" translatable="false">数据报表管理</string>
+    <!-- hospital info manage -->
+    <string name="fragment_hospital_info_title" translatable="false">医院信息管理</string>
+    <!-- department manage -->
+    <string name="fragment_dep_manage_title" translatable="false">科室管理</string>
+    <!-- department add fragment -->
+    <string name="fragment_dep_add_title" translatable="false">新增科室</string>
+    <string name="row_dep_name" translatable="false">科室名称：</string>
+    <string name="row_dep_type" translatable="false">科室类型：</string>
+    <!-- department modify fragment -->
+    <string name="fragment_dep_modify_title" translatable="false">科室信息</string>
+    <!-- doctor manage fragment -->
+    <string name="fragment_doctor_manage_title" translatable="false">医疗专家管理</string>
+    <!-- doctor modify fragment -->
+    <string name="fragment_doctor_modify_title" translatable="false">医生信息</string>
+    <!-- doctor add fragment -->
+    <string name="fragment_doctor_add_title" translatable="false">新增医生</string>
+    <string name="row_doctor_id" translatable="false">登录账号：</string>
+    <string name="row_doctor_type" translatable="false">所属科室：</string>
+    <string name="row_doctor_name" translatable="false">医生姓名：</string>
+    <string name="row_doctor_sex" translatable="false">医生性别：</string>
+    <string name="row_doctor_title" translatable="false">医生标题：</string>
+    <string name="row_doctor_skill" translatable="false">擅长领域：</string>
+    <string name="row_doctor_intro" translatable="false">个人简介：</string>
+    <string name="row_doctor_photo" translatable="false">医生头像：</string>
 
     <!-- doctor home -->
     <string name="doctor_manage_reserdate" translatable="false">坐诊时间管理</string>

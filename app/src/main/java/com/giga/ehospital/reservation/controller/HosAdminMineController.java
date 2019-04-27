@@ -6,6 +6,8 @@ import android.widget.Toast;
 
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
+import com.giga.ehospital.reservation.container.NormalContainer;
+import com.giga.ehospital.reservation.model.hospital.Hospital;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout;
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
@@ -45,7 +47,16 @@ public class HosAdminMineController extends QMUIWindowInsetLayout {
         mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.setTitle(getResources().getString(R.string.mine));
         mTopBar.addRightImageButton(R.mipmap.ic_setting, R.id.topbar_right_setting_button)
-                .setOnClickListener(view -> Toast.makeText(getContext(),"设置按钮", Toast.LENGTH_SHORT).show());
+                .setOnClickListener(view -> {
+                    Hospital hospital = NormalContainer.get(NormalContainer.HOSPITAL);
+                    String msg = "";
+                    if (hospital == null)
+                        msg = "null";
+                    else
+                        msg = hospital.getHospitalId();
+                    Toast.makeText(getContext(),
+                            msg, Toast.LENGTH_SHORT).show();
+                });
     }
 
     protected void initRefreshLayout() {
