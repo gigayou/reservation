@@ -1,25 +1,39 @@
 package com.giga.ehospital.reservation.fragment.home;
 
+import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.fragment.BaseFragment;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
+import com.giga.ehospital.reservation.container.NormalContainer;
 import com.giga.ehospital.reservation.controller.DoctorHomeController;
 import com.giga.ehospital.reservation.controller.DoctorInfoController;
 import com.giga.ehospital.reservation.controller.DoctorMineController;
+import com.giga.ehospital.reservation.manager.hosadmin.DoctorDataManager;
+import com.giga.ehospital.reservation.model.hospital.Doctor;
+import com.linxiao.framework.common.GsonParser;
+import com.linxiao.framework.net.ApiResponse;
+import com.linxiao.framework.rx.RxSubscriber;
 import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
 import java.util.HashMap;
+import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import es.dmoral.toasty.Toasty;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class DoctorHomeFragment extends BaseFragment {
 
@@ -27,6 +41,13 @@ public class DoctorHomeFragment extends BaseFragment {
     ViewPager mViewPager;
     @BindView(R.id.fragment_tabs)
     QMUITabSegment mTabSegment;
+    @BindString(R.string.LOADING_MESSAGE)
+    String LOADING_MESSAGE;
+
+    private static Doctor tDoctor = new Doctor();
+
+    private String userId;
+    private DoctorDataManager doctorDataManager;
 
     private HashMap<Pager, View> mPages;
 
@@ -34,9 +55,48 @@ public class DoctorHomeFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_doctor, null);
         ButterKnife.bind(this, root);
+        receiveBundle();
+        initDataManager();
+        initDoctor();
         initTabs();
         initPagers();
         return root;
+    }
+
+    private void initDataManager() {
+        doctorDataManager = new DoctorDataManager();
+    }
+
+    private void receiveBundle() {
+        Bundle arguments = this.getArguments();
+        userId = (String) arguments.get("userId");
+    }
+
+    private void initDoctor() {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        doctorDataManager.list(tDoctor)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    progressDialog.setMessage(LOADING_MESSAGE);
+                    progressDialog.show();
+                })
+                .doOnComplete(() -> progressDialog.dismiss())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                        if (response.success()) {
+                            List<Doctor> doctors = GsonParser.fromJSONArray(response.data, Doctor.class);
+                            for (Doctor doctor : doctors) {
+                                if (doctor.getLoginId().equals(userId))
+                                    NormalContainer.put(NormalContainer.DOCTOR, doctor);
+                            }
+                        } else {
+                            Toasty.error(getContext(),response.message, Toast.LENGTH_LONG, true).show();
+                        }
+                    }
+                });
     }
 
     /**

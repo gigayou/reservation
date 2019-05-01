@@ -52,11 +52,6 @@
 
                             </LinearLayout>
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="100dp"
-                                android:background="@color/qmui_config_color_white" />
-
                             <!-- show hospital service content one-->
                             <LinearLayout
                                 android:layout_width="match_parent"
@@ -66,7 +61,7 @@
 
                                 <!-- show outpatient payment  -->
                                 <LinearLayout
-                                    android:id="@+id/hospital_manager_linearLayout"
+                                    android:id="@+id/patient_reservation_linearLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -78,20 +73,20 @@
                                         android:layout_height="36dp"
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginBottom="4dp"
-                                        android:src="@mipmap/ic_sysm_hospital_manage" />
+                                        android:src="@mipmap/ic_patient_reservation" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_horizontal"
-                                        android:text="@string/sysm_manage_hospital"
+                                        android:text="@string/patient_start_reservation"
                                         android:textColor="?attr/qmui_config_color_gray_5"
                                         android:textSize="11sp" />
 
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:id="@+id/hadmin_manager_linearLayout"
+                                    android:id="@+id/patient_depdoc_linearLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -103,20 +98,20 @@
                                         android:layout_height="36dp"
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginBottom="4dp"
-                                        android:src="@mipmap/ic_sysm_hadmin_manage" />
+                                        android:src="@mipmap/ic_patient_depdoc" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_horizontal"
-                                        android:text="@string/sysm_manage_hospital_admin"
+                                        android:text="@string/patient_depdoc_info"
                                         android:textColor="?attr/qmui_config_color_gray_5"
                                         android:textSize="11sp" />
                                 </LinearLayout>
 
                                 <!-- show medical card  -->
                                 <LinearLayout
-                                    android:id="@+id/db_manager_linearLayout"
+                                    android:id="@+id/patient_resstatus_linearLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -128,20 +123,20 @@
                                         android:layout_height="36dp"
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginBottom="4dp"
-                                        android:src="@mipmap/ic_sysm_db_manage" />
+                                        android:src="@mipmap/ic_patient_resstatus" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_horizontal"
-                                        android:text="@string/sysm_manage_db"
+                                        android:text="@string/patient_reservation_info"
                                         android:textColor="?attr/qmui_config_color_gray_5"
                                         android:textSize="11sp" />
                                 </LinearLayout>
 
                                 <!-- show navgation  -->
                                 <LinearLayout
-                                    android:id="@+id/system_setting_linearLayout"
+                                    android:id="@+id/patinet_resstop_linearLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -153,13 +148,13 @@
                                         android:layout_height="36dp"
                                         android:layout_gravity="center_horizontal"
                                         android:layout_marginBottom="4dp"
-                                        android:src="@mipmap/ic_sysm_system_setting" />
+                                        android:src="@mipmap/ic_patient_resstop" />
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center_horizontal"
-                                        android:text="@string/sysm_system_setting"
+                                        android:text="@string/patient_reservation_stop"
                                         android:textColor="?attr/qmui_config_color_gray_5"
                                         android:textSize="11sp" />
 

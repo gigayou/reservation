@@ -67,7 +67,7 @@
 
                                 <!-- show outpatient payment  -->
                                 <LinearLayout
-                                    android:id="@+id/hospital_manager_linearLayout"
+                                    android:id="@+id/patient_reservation_linearLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -92,7 +92,7 @@
                                 </LinearLayout>
 
                                 <LinearLayout
-                                    android:id="@+id/hadmin_manager_linearLayout"
+                                    android:id="@+id/patient_depdoc_linearLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -117,7 +117,7 @@
 
                                 <!-- show medical card  -->
                                 <LinearLayout
-                                    android:id="@+id/db_manager_linearLayout"
+                                    android:id="@+id/patient_resstatus_linearLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -142,7 +142,7 @@
 
                                 <!-- show navgation  -->
                                 <LinearLayout
-                                    android:id="@+id/system_setting_linearLayout"
+                                    android:id="@+id/patinet_resstop_linearLayout"
                                     android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"

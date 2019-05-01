@@ -103,12 +103,31 @@
     <string name="row_doctor_skill" translatable="false">擅长领域：</string>
     <string name="row_doctor_intro" translatable="false">个人简介：</string>
     <string name="row_doctor_photo" translatable="false">医生头像：</string>
-
+    <!-- calendar manage fragment -->
+    <string name="fragment_calendar_manage_title" translatable="false">接诊安排管理</string>
+    <!-- calendar add fragment -->
+    <string name="fragment_calendar_add_title" translatable="false">新增接诊</string>
+    <string name="row_visting_doctor" translatable="false">接诊医生：</string>
+    <string name="row_visiting_date" translatable="false">接诊日期：</string>
+    <string name="row_visiting_period" translatable="false">接诊时段：</string>
+    <string name="row_visiting_num" translatable="false">接诊人数：</string>
+    <string name="row_visiting_rnum" translatable="false">剩余人数：</string>
+    <string name="row_visiting_valid" translatable="false">有效性：</string>
+    <!-- calendar modify fragment -->
+    <string name="fragment_calendar_modify_title" translatable="false">接诊信息</string>
     <!-- doctor home -->
     <string name="doctor_manage_reserdate" translatable="false">坐诊时间管理</string>
     <string name="doctor_manage_selfinfo" translatable="false">个人简历管理</string>
     <string name="doctor_manage_reserinfo" translatable="false">挂号信息管理</string>
     <string name="doctor_answer" translatable="false">回答用户提问</string>
+    <!-- doctor info manage fragment -->
+    <string name="fragment_doctor_info_title" translatable="false">个人简历管理</string>
+
+    <!-- patient home -->
+    <string name="patient_start_reservation" translatable="false">预约挂号</string>
+    <string name="patient_depdoc_info" translatable="false">医生查询</string>
+    <string name="patient_reservation_info" translatable="false">预约信息</string>
+    <string name="patient_reservation_stop" translatable="false">停诊信息</string>
 
     <!-- about -->
     <string name="about_copyright" translatable="false">---关于介绍---</string>

@@ -13,10 +13,14 @@ import org.greenrobot.greendao.DaoException;
 import com.giga.ehospital.reservation.model.hospital.CalendarDao;
 import com.giga.ehospital.reservation.model.code.DaoSession;
 
+import java.io.Serializable;
+
 //@Entity(nameInDb = "reservation_info")
 @Entity
 @Data
-public class Reservation extends Page {
+public class Reservation extends Page implements Serializable {
+
+    private static final long serialVersionUID = 6977402643800987765L;
 
     @Property(nameInDb = "reservation_id")
     private String reservationId;

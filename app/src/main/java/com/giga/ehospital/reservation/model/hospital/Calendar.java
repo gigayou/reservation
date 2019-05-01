@@ -9,10 +9,14 @@ import org.greenrobot.greendao.annotation.Property;
 import lombok.Data;
 import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
 //@Entity(nameInDb = "admission_calendar")
 @Entity
 @Data
-public class Calendar extends Page {
+public class Calendar extends Page implements Serializable {
+
+    private static final long serialVersionUID = 6977402643811546654L;
 
     @Id
     @Property(nameInDb = "admission_id")

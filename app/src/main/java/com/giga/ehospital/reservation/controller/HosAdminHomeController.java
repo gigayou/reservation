@@ -1,7 +1,6 @@
 package com.giga.ehospital.reservation.controller;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -16,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
 import com.giga.ehospital.reservation.fragment.home.HealthArticleFragment;
+import com.giga.ehospital.reservation.fragment.hosadmin.CalendarManageFragment;
 import com.giga.ehospital.reservation.fragment.hosadmin.DepManageFragment;
 import com.giga.ehospital.reservation.fragment.hosadmin.DoctorManageFragment;
 import com.giga.ehospital.reservation.fragment.hosadmin.HosInfoManagerFragment;
@@ -32,9 +32,11 @@ import com.tmall.ultraviewpager.UltraViewPager;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class HosAdminHomeController extends QMUIWindowInsetLayout {
 
@@ -48,6 +50,8 @@ public class HosAdminHomeController extends QMUIWindowInsetLayout {
     QMUITabSegment mTabSegment;
     @BindView(R.id.ultraview_pager)
     UltraViewPager mHospitalActivityUltraViewPager;
+    @BindString(R.string.wait_please)
+    String WAIT_PLEASE;
 
     private Context mContext;
     private ControllerClickHandler mHandler;
@@ -77,8 +81,10 @@ public class HosAdminHomeController extends QMUIWindowInsetLayout {
                 mHandler.startFragment(new DoctorManageFragment());
                 break;
             case R.id.hosm_reservation_manage_linearLayout:
+                mHandler.startFragment(new CalendarManageFragment());
                 break;
             case R.id.hosm_dataexcel_manage_linearLayout:
+                Toasty.info(getContext(), WAIT_PLEASE, Toasty.LENGTH_SHORT, true).show();
                 break;
         }
     }

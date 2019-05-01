@@ -1,7 +1,5 @@
 package com.giga.ehospital.reservation.container;
 
-import android.app.Application;
-
 import com.giga.ehospital.reservation.model.hospital.Hospital;
 
 import java.io.Serializable;
@@ -18,6 +16,7 @@ public class NormalContainer implements Serializable {
     // 非选择类型
     public static final String USER = "USER"; // 当前登录的用户
     public static final String HOSPITAL = "HOSPITAL"; // 当前用户（医院管理员|医生）所关联的医院
+    public static final String DOCTOR = "DOCTOR";   // 当前用户（医生）的个人信息
 
     // 选择类型
     public static final String SELECTED_ACTIVITY = "SELECTED_ACTIVITY"; // 当前的activity

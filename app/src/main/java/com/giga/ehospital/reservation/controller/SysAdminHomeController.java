@@ -1,7 +1,6 @@
 package com.giga.ehospital.reservation.controller;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -19,7 +18,6 @@ import com.giga.ehospital.reservation.fragment.home.HealthArticleFragment;
 import com.giga.ehospital.reservation.fragment.sysadmin.DBManageFragment;
 import com.giga.ehospital.reservation.fragment.sysadmin.HosAdminManagerFragment;
 import com.giga.ehospital.reservation.fragment.sysadmin.HosManageFragment;
-import com.giga.ehospital.reservation.fragment.sysadmin.SysSettingManager;
 import com.giga.ehospital.reservation.helper.DialogHelper;
 import com.giga.ehospital.reservation.helper.TipDialogHelper;
 import com.giga.ehospital.reservation.model.vo.HealthArticle;
@@ -50,7 +48,7 @@ public class SysAdminHomeController extends QMUIWindowInsetLayout {
     @BindView(R.id.controller_tabs)
     QMUITabSegment mTabSegment;
     @BindView(R.id.ultraview_pager)
-    UltraViewPager mHospitalActivityUltraViewPager;
+    UltraViewPager mSysAdminActivityUltraViewPager;
     @BindString(R.string.wait_please)
     String WAIT_PLEASE_TOAST_TITLE;
 
@@ -68,20 +66,20 @@ public class SysAdminHomeController extends QMUIWindowInsetLayout {
         init(context);
     }
 
-    @OnClick({R.id.hospital_manager_linearLayout, R.id.hadmin_manager_linearLayout,
-            R.id.db_manager_linearLayout, R.id.system_setting_linearLayout})
+    @OnClick({R.id.patient_reservation_linearLayout, R.id.patient_depdoc_linearLayout,
+            R.id.patient_resstatus_linearLayout, R.id.patinet_resstop_linearLayout})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.hospital_manager_linearLayout:
+            case R.id.patient_reservation_linearLayout:
                 mHandler.startFragment(new HosManageFragment());
                 break;
-            case R.id.hadmin_manager_linearLayout:
+            case R.id.patient_depdoc_linearLayout:
                 mHandler.startFragment(new HosAdminManagerFragment());
                 break;
-            case R.id.db_manager_linearLayout:
+            case R.id.patient_resstatus_linearLayout:
                 mHandler.startFragment(new DBManageFragment());
                 break;
-            case R.id.system_setting_linearLayout:
+            case R.id.patinet_resstop_linearLayout:
 //                mHandler.startFragment(new SysSettingManager());
                 Toasty.info(getContext(), WAIT_PLEASE_TOAST_TITLE, Toasty.LENGTH_SHORT, true).show();
                 break;
@@ -229,10 +227,10 @@ public class SysAdminHomeController extends QMUIWindowInsetLayout {
      * 初始化轮播图
      */
     private void initUltraViewPager() {
-        mHospitalActivityUltraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
-        mHospitalActivityUltraViewPager.setAdapter(mUltraPagerAdapter);
-        mHospitalActivityUltraViewPager.setInfiniteLoop(true);
-        mHospitalActivityUltraViewPager.setAutoScroll(4000);
+        mSysAdminActivityUltraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
+        mSysAdminActivityUltraViewPager.setAdapter(mUltraPagerAdapter);
+        mSysAdminActivityUltraViewPager.setInfiniteLoop(true);
+        mSysAdminActivityUltraViewPager.setAutoScroll(4000);
     }
 
     private PagerAdapter mUltraPagerAdapter = new PagerAdapter() {

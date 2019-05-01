@@ -41,7 +41,7 @@ import es.dmoral.toasty.Toasty;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
-public class HosInfoManagerFragment  extends StandardWithTobBarLayoutFragment {
+public class HosInfoManagerFragment extends StandardWithTobBarLayoutFragment {
 
     @BindView(R.id.scrollview)
     NestedScrollView scrollView;

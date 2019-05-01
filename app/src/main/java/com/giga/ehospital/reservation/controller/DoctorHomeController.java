@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
+import com.giga.ehospital.reservation.fragment.doctor.DoctorInfoManageFragment;
 import com.giga.ehospital.reservation.fragment.home.HealthArticleFragment;
 import com.giga.ehospital.reservation.helper.DialogHelper;
 import com.giga.ehospital.reservation.helper.TipDialogHelper;
@@ -28,9 +29,11 @@ import com.tmall.ultraviewpager.UltraViewPager;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class DoctorHomeController extends QMUIWindowInsetLayout {
 
@@ -43,7 +46,9 @@ public class DoctorHomeController extends QMUIWindowInsetLayout {
     @BindView(R.id.controller_tabs)
     QMUITabSegment mTabSegment;
     @BindView(R.id.ultraview_pager)
-    UltraViewPager mHospitalActivityUltraViewPager;
+    UltraViewPager mDoctorActivityUltraViewPager;
+    @BindString(R.string.wait_please)
+    String WAIT_PLEASE;
 
     private Context mContext;
     private ControllerClickHandler mHandler;
@@ -64,12 +69,16 @@ public class DoctorHomeController extends QMUIWindowInsetLayout {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.doctor_reserdate_manage_linearLayout:
+                Toasty.info(getContext(), WAIT_PLEASE, Toasty.LENGTH_SHORT, true).show();
                 break;
             case R.id.doctor_selfinfo_manage_linearLayout:
+                mHandler.startFragment(new DoctorInfoManageFragment());
                 break;
             case R.id.doctor_reserinfo_manage_linearLayout:
+                Toasty.info(getContext(), WAIT_PLEASE, Toasty.LENGTH_SHORT, true).show();
                 break;
             case R.id.doctor_answer_linearLayout:
+                Toasty.info(getContext(), WAIT_PLEASE, Toasty.LENGTH_SHORT, true).show();
                 break;
         }
     }
@@ -216,10 +225,10 @@ public class DoctorHomeController extends QMUIWindowInsetLayout {
      * 初始化轮播图
      */
     private void initUltraViewPager() {
-        mHospitalActivityUltraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
-        mHospitalActivityUltraViewPager.setAdapter(mUltraPagerAdapter);
-        mHospitalActivityUltraViewPager.setInfiniteLoop(true);
-        mHospitalActivityUltraViewPager.setAutoScroll(4000);
+        mDoctorActivityUltraViewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
+        mDoctorActivityUltraViewPager.setAdapter(mUltraPagerAdapter);
+        mDoctorActivityUltraViewPager.setInfiniteLoop(true);
+        mDoctorActivityUltraViewPager.setAutoScroll(4000);
     }
 
     private PagerAdapter mUltraPagerAdapter = new PagerAdapter() {

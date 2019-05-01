@@ -48,7 +48,7 @@ public class DepAddFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static DepartmentType departmentType = new DepartmentType();
+    private DepartmentType departmentType = new DepartmentType();
 
     private DepTypeDataManager depTypeDataManager;
     private DepDataManager depDataManager;

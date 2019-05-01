@@ -1,5 +1,6 @@
 package com.giga.ehospital.reservation.model.hospital;
 
+import com.contrarywind.interfaces.IPickerViewData;
 import com.giga.ehospital.reservation.model.base.Page;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -14,7 +15,7 @@ import java.io.Serializable;
 //@Entity(nameInDb = "doctor_info")
 @Entity
 @Data
-public class Doctor extends Page implements Serializable {
+public class Doctor extends Page implements Serializable, IPickerViewData {
 
     private static final long serialVersionUID = 6977402643855467865L;
 
@@ -144,5 +145,10 @@ public class Doctor extends Page implements Serializable {
     }
     public void setLoginPwd(String loginPwd) {
         this.loginPwd = loginPwd;
+    }
+
+    @Override
+    public String getPickerViewText() {
+        return doctorName;
     }
 }
