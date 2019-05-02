@@ -145,45 +145,6 @@ public class CalendarAddFragment  extends StandardWithTobBarLayoutFragment {
         }
     }
 
-    private boolean localCheck() {
-        boolean flag = false;
-
-        // doctor sel
-        if (sDoctorIndex == null) {
-            Toasty.error(getContext(), "请选择医生", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-
-        // visiting date sel
-        String visitingDate = tvVisitingDate.getText().toString().trim();
-        if (StringUtils.isBlank(visitingDate)) {
-            Toasty.error(getContext(), "请选择日期", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-
-        // period sel
-        if (sPeriodIndex == null) {
-            Toasty.error(getContext(), "请选择时段", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-
-        // visiting num limit
-        String vnum = etVisitingNum.getText().toString();
-        if (StringUtils.isBlank(vnum)) {
-            Toasty.error(getContext(), "请填写当天总预约人数", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-
-        // valid sel
-        if (sValidIndex == null) {
-            Toasty.error(getContext(), "请选择有效性", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-
-        flag = true;
-        return flag;
-    }
-
     private void pushInfo() {
         com.giga.ehospital.reservation.model.hospital.Calendar calendar = new com.giga.ehospital.reservation.model.hospital.Calendar();
         // hospitalId
@@ -218,6 +179,10 @@ public class CalendarAddFragment  extends StandardWithTobBarLayoutFragment {
         } catch (Exception e) {
             Toasty.error(getContext(), "请在接诊人数上输入有效数字", Toasty.LENGTH_SHORT, true).show();
             Log.e("error", "cast exception");
+            return;
+        }
+        if (num < 0) {
+            Toasty.warning(getContext(), "接诊人数不能为负数", Toasty.LENGTH_SHORT, true).show();
             return;
         }
         calendar.setAdmissionNum(num);

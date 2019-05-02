@@ -44,8 +44,6 @@ public class DoctorHomeFragment extends BaseFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private Doctor tDoctor = new Doctor();
-
     private String userId;
     private DoctorDataManager doctorDataManager;
 
@@ -57,7 +55,6 @@ public class DoctorHomeFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         receiveBundle();
         initDataManager();
-        initDoctor();
         initTabs();
         initPagers();
         return root;
@@ -70,33 +67,6 @@ public class DoctorHomeFragment extends BaseFragment {
     private void receiveBundle() {
         Bundle arguments = this.getArguments();
         userId = (String) arguments.get("userId");
-    }
-
-    private void initDoctor() {
-        final ProgressDialog progressDialog = new ProgressDialog(getContext());
-        doctorDataManager.list(tDoctor)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnSubscribe(disposable -> {
-                    progressDialog.setMessage(LOADING_MESSAGE);
-                    progressDialog.show();
-                })
-                .doOnComplete(() -> progressDialog.dismiss())
-                .subscribe(new RxSubscriber<String>() {
-                    @Override
-                    public void onNext(String s) {
-                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
-                        if (response.success()) {
-                            List<Doctor> doctors = GsonParser.fromJSONArray(response.data, Doctor.class);
-                            for (Doctor doctor : doctors) {
-                                if (doctor.getLoginId().equals(userId))
-                                    NormalContainer.put(NormalContainer.DOCTOR, doctor);
-                            }
-                        } else {
-                            Toasty.error(getContext(),response.message, Toast.LENGTH_LONG, true).show();
-                        }
-                    }
-                });
     }
 
     /**

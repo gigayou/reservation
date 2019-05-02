@@ -10,14 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
+import com.giga.ehospital.reservation.container.NormalContainer;
+import com.giga.ehospital.reservation.fragment.doctor.CalendarManageFragment;
 import com.giga.ehospital.reservation.fragment.doctor.DoctorInfoManageFragment;
 import com.giga.ehospital.reservation.fragment.home.HealthArticleFragment;
 import com.giga.ehospital.reservation.helper.DialogHelper;
 import com.giga.ehospital.reservation.helper.TipDialogHelper;
+import com.giga.ehospital.reservation.model.hospital.Doctor;
 import com.giga.ehospital.reservation.model.vo.HealthArticle;
 import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
@@ -29,6 +33,7 @@ import com.tmall.ultraviewpager.UltraViewPager;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindInt;
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +52,14 @@ public class DoctorHomeController extends QMUIWindowInsetLayout {
     QMUITabSegment mTabSegment;
     @BindView(R.id.ultraview_pager)
     UltraViewPager mDoctorActivityUltraViewPager;
+    @BindView(R.id.doctor_reserdate_manage_linearLayout)
+    LinearLayout llt1;
+    @BindView(R.id.doctor_selfinfo_manage_linearLayout)
+    LinearLayout llt2;
+    @BindView(R.id.doctor_reserinfo_manage_linearLayout)
+    LinearLayout llt3;
+    @BindView(R.id.doctor_answer_linearLayout)
+    LinearLayout llt4;
     @BindString(R.string.wait_please)
     String WAIT_PLEASE;
 
@@ -75,7 +88,7 @@ public class DoctorHomeController extends QMUIWindowInsetLayout {
                 mHandler.startFragment(new DoctorInfoManageFragment());
                 break;
             case R.id.doctor_reserinfo_manage_linearLayout:
-                Toasty.info(getContext(), WAIT_PLEASE, Toasty.LENGTH_SHORT, true).show();
+                mHandler.startFragment(new CalendarManageFragment());
                 break;
             case R.id.doctor_answer_linearLayout:
                 Toasty.info(getContext(), WAIT_PLEASE, Toasty.LENGTH_SHORT, true).show();
@@ -90,6 +103,18 @@ public class DoctorHomeController extends QMUIWindowInsetLayout {
         initUltraViewPager();
         initTabs();
         initPagers();
+        checkLocalDoctor();
+    }
+
+    private void checkLocalDoctor() {
+        Doctor doctor = NormalContainer.get(NormalContainer.DOCTOR);
+        if (doctor == null || doctor.getDoctorId() == null) {
+            Toasty.warning(getContext(), "数据同步失败，请重新登录", Toasty.LENGTH_SHORT, true).show();
+            llt1.setEnabled(false);
+            llt2.setEnabled(false);
+            llt3.setEnabled(false);
+            llt4.setEnabled(false);
+        }
     }
 
     HashMap<HealthArticleFragment.Pager, View> mPages;

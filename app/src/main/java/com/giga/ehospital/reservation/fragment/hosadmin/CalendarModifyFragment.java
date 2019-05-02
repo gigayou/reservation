@@ -214,7 +214,7 @@ public class CalendarModifyFragment extends StandardWithTobBarLayoutFragment {
         if (StringUtils.isNotBlank(visitingDate))
             mCalendar.setAdmissionDate(visitingDate);
         else {
-            Toasty.info(getContext(), "请选择日期", Toasty.LENGTH_SHORT, true).show();
+            Toasty.warning(getContext(), "请选择日期", Toasty.LENGTH_SHORT, true).show();
             return;
         }
         // visiting num sel
@@ -222,8 +222,12 @@ public class CalendarModifyFragment extends StandardWithTobBarLayoutFragment {
         try {
             visitingNum = Integer.valueOf(etVisitingNum.getText().toString().trim());
         } catch (Exception e) {
-            Toasty.error(getContext(), "请在接诊人数上输入有效数字", Toasty.LENGTH_SHORT, true).show();
+            Toasty.warning(getContext(), "请在接诊人数上输入有效数字", Toasty.LENGTH_SHORT, true).show();
             Log.e("error", "cast exception");
+            return;
+        }
+        if (visitingNum < 0) {
+            Toasty.warning(getContext(), "接诊人数不能为符数", Toasty.LENGTH_SHORT, true).show();
             return;
         }
         mCalendar.setAdmissionNum(visitingNum);
@@ -234,6 +238,14 @@ public class CalendarModifyFragment extends StandardWithTobBarLayoutFragment {
         } catch (Exception e) {
             Toasty.error(getContext(), "请在剩余人数上输入有效数字", Toasty.LENGTH_SHORT, true).show();
             Log.e("error", "cast exception");
+            return;
+        }
+        if (remainingNum < 0) {
+            Toasty.warning(getContext(), "剩余人数不能为负数", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+        if (remainingNum > visitingNum) {
+            Toasty.warning(getContext(), "剩余人数不能大于接诊人数", Toasty.LENGTH_SHORT, true).show();
             return;
         }
         mCalendar.setRemainingNum(remainingNum);
