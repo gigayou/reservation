@@ -148,11 +148,6 @@ public class CalendarAddFragment  extends StandardWithTobBarLayoutFragment {
     private boolean localCheck() {
         boolean flag = false;
 
-        if (doctorOptions.size() == 0 ) {
-            Toasty.error(getContext(), "当前医院没有医生，请添加", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-
         // doctor sel
         if (sDoctorIndex == null) {
             Toasty.error(getContext(), "请选择医生", Toasty.LENGTH_SHORT, true).show();
@@ -190,51 +185,71 @@ public class CalendarAddFragment  extends StandardWithTobBarLayoutFragment {
     }
 
     private void pushInfo() {
-        if (localCheck()) {
-            com.giga.ehospital.reservation.model.hospital.Calendar calendar = new com.giga.ehospital.reservation.model.hospital.Calendar();
-
-            // hospitalId
-            Hospital hospital = NormalContainer.get(NormalContainer.HOSPITAL);
-            String hospitalId = hospital.getHospitalId();
-            calendar.setHospitalId(hospitalId);
-            // doctor id
-            Doctor doctor = doctorOptions.get(sDoctorIndex);
-            String doctorId = doctor.getDoctorId();
-            calendar.setDoctorId(doctorId);
-            // visiting datet
-            String visitingDate = tvVisitingDate.getText().toString().trim();
-            calendar.setAdmissionDate(visitingDate);
-            // period
-            calendar.setAdmissionPeriod(sPeriodIndex + "");
-            // visiting num & remaining num
-            Integer num = Integer.valueOf(etVisitingNum.getText().toString().trim());
-            calendar.setAdmissionNum(num);
-            calendar.setRemainingNum(num);
-            // valid
-            calendar.setIsValid(sValidIndex);
-
-            final ProgressDialog progressDialog = new ProgressDialog(getContext());
-            calendarDataManager.add(calendar)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe(disposable -> {
-                        progressDialog.setMessage(LOADING_MESSAGE);
-                        progressDialog.show();
-                    })
-                    .doOnComplete(() -> progressDialog.dismiss())
-                    .subscribe(new RxSubscriber<String>() {
-                        @Override
-                        public void onNext(String s) {
-                            ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
-                            if (response.success()) {
-                                getActivity().onBackPressed();
-                                Toasty.success(getContext(), "添加成功", Toasty.LENGTH_SHORT, true).show();
-                            } else {
-                                Toasty.error(getContext(), response.message, Toast.LENGTH_LONG, true).show();
-                            }
-                        }
-                    });
+        com.giga.ehospital.reservation.model.hospital.Calendar calendar = new com.giga.ehospital.reservation.model.hospital.Calendar();
+        // hospitalId
+        Hospital hospital = NormalContainer.get(NormalContainer.HOSPITAL);
+        String hospitalId = hospital.getHospitalId();
+        calendar.setHospitalId(hospitalId);
+        // doctor id
+        if (sDoctorIndex == null) {
+            Toasty.warning(getContext(), "请选择接诊医生", Toasty.LENGTH_SHORT, true).show();
+            return;
         }
+        Doctor doctor = doctorOptions.get(sDoctorIndex);
+        String doctorId = doctor.getDoctorId();
+        calendar.setDoctorId(doctorId);
+        // visiting date
+        String visitingDate = tvVisitingDate.getText().toString().trim();
+        if (StringUtils.isBlank(visitingDate)) {
+            Toasty.warning(getContext(), "请选择接诊日期", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+        calendar.setAdmissionDate(visitingDate);
+        // period
+        if (sPeriodIndex == null) {
+            Toasty.warning(getContext(), "请选择接诊时段", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+        calendar.setAdmissionPeriod(sPeriodIndex + "");
+        // visiting num & remaining num
+        Integer num = 0;
+        try {
+            num = Integer.valueOf(etVisitingNum.getText().toString().trim());
+        } catch (Exception e) {
+            Toasty.error(getContext(), "请在接诊人数上输入有效数字", Toasty.LENGTH_SHORT, true).show();
+            Log.e("error", "cast exception");
+            return;
+        }
+        calendar.setAdmissionNum(num);
+        calendar.setRemainingNum(num);
+        // valid
+        if (sValidIndex == null) {
+            Toasty.warning(getContext(), "请选择接诊有效性", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+        calendar.setIsValid(sValidIndex);
+
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        calendarDataManager.add(calendar)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    progressDialog.setMessage(LOADING_MESSAGE);
+                    progressDialog.show();
+                })
+                .doOnComplete(() -> progressDialog.dismiss())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                        if (response.success()) {
+                            getActivity().onBackPressed();
+                            Toasty.success(getContext(), "添加成功", Toasty.LENGTH_SHORT, true).show();
+                        } else {
+                            Toasty.error(getContext(), response.message, Toast.LENGTH_LONG, true).show();
+                        }
+                    }
+                });
     }
 
     /**

@@ -47,7 +47,7 @@ public class CalendarManageFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static Calendar tCalendar = new Calendar();
+    private Calendar tCalendar = new Calendar();
     private String hospitalId;
     private CalendarDao calendarDao;
     private CalendarDataManager calendarDataManager;

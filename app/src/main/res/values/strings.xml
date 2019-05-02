@@ -77,7 +77,7 @@
     <string name="hosm_manage_hosinfo" translatable="false">医院信息管理</string>
     <string name="hosm_manage_department" translatable="false">科室管理</string>
     <string name="hosm_manage_doctor" translatable="false">医疗专家管理</string>
-    <string name="hosm_mange_reservation" translatable="false">挂号设置管理</string>
+    <string name="hosm_mange_reservation" translatable="false">接诊安排管理</string>
     <string name="hosm_manage_dataexcel" translatable="false">数据报表管理</string>
     <!-- hospital info manage -->
     <string name="fragment_hospital_info_title" translatable="false">医院信息管理</string>

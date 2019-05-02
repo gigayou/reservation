@@ -22,6 +22,7 @@ import com.linxiao.framework.common.GsonParser;
 import com.linxiao.framework.net.ApiResponse;
 import com.linxiao.framework.rx.RxSubscriber;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 
 import java.util.List;
@@ -46,7 +47,7 @@ public class DepModifyFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static DepartmentType departmentType = new DepartmentType();
+    private DepartmentType departmentType = new DepartmentType();
 
     private DepTypeDataManager depTypeDataManager;
     private DepDataManager depDataManager;
@@ -114,8 +115,21 @@ public class DepModifyFragment extends StandardWithTobBarLayoutFragment {
         Department department = new Department();
         department.setDepartmentId(sDepartmentId);
         department.setHospitalId(sHospitalId);
-        department.setTypeId(sDepTypeId);
+        // department type
+        // 判断有无选择部门类型
+        if (sDepTypeIndex == null)
+            department.setTypeId(sDepTypeId);
+        else {
+            Long typeId = depTypeOptions.get(sDepTypeIndex).getDepartmentTypeId();
+            department.setTypeId(typeId);
+        }
+        // department name
+        if (StringUtils.isBlank(depName)) {
+            Toasty.warning(getContext(), "请填写科室名称", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         department.setDepartmentName(depName);
+        // department type name
         department.setTypeName(depTypeName);
 
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
@@ -166,9 +180,7 @@ public class DepModifyFragment extends StandardWithTobBarLayoutFragment {
 
     private void transform2DepTypeList(String json) {
         JSONArray jsonArray = GsonParser.fromJSONObject(json, JSONArray.class);
-        List<DepartmentType> departmentTypes = GsonParser.fromJSONArray(jsonArray, DepartmentType.class);
-
-        depTypeOptions = departmentTypes;
+        depTypeOptions = GsonParser.fromJSONArray(jsonArray, DepartmentType.class);
     }
 
     private void showDepTypePickerView() {
@@ -179,7 +191,6 @@ public class DepModifyFragment extends StandardWithTobBarLayoutFragment {
                         depTypeOptions.get(options1).getPickerViewText() : "";
                 tvDepType.setText(depType);
                 sDepTypeIndex = options1;
-                sDepTypeId = depTypeOptions.get(sDepTypeIndex).getDepartmentTypeId();
             }
         })
                 .setTitleText("科室类型选择")

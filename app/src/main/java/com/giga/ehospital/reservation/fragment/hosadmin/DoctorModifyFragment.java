@@ -56,7 +56,7 @@ public class DoctorModifyFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static DepartmentType tDepartmentType = new DepartmentType();
+    private DepartmentType tDepartmentType = new DepartmentType();
 
     private DepTypeDataManager depTypeDataManager;
     private DoctorDataManager doctorDataManager;
@@ -104,11 +104,6 @@ public class DoctorModifyFragment extends StandardWithTobBarLayoutFragment {
         sSexIndex = doctor.getSex();
 
         String doctorName = doctor.getDoctorName();
-//        String deptTypeName = "";
-//        for (DepartmentType departmentType : this.depTypeOptions) {
-//            if (departmentType.getDepartmentTypeId() == doctor.getTypeId())
-//                deptTypeName = departmentType.getDepartmentTypeName();
-//        }
         String doctorSkill = doctor.getSkill();
         String introduction = doctor.getIntroduction();
 
@@ -231,9 +226,7 @@ public class DoctorModifyFragment extends StandardWithTobBarLayoutFragment {
 
     private void transform2DepTypeList(String json) {
         JSONArray jsonArray = GsonParser.fromJSONObject(json, JSONArray.class);
-        List<DepartmentType> departmentTypes = GsonParser.fromJSONArray(jsonArray, DepartmentType.class);
-
-        depTypeOptions = departmentTypes;
+        depTypeOptions = GsonParser.fromJSONArray(jsonArray, DepartmentType.class);
     }
 
     private void initSexOptions() {

@@ -66,7 +66,7 @@ public class HosModifyFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static Buser buser = new Buser();
+    private Buser buser = new Buser();
     private Hospital hospital;
 
     private BuserDataManager buserDataManager;
@@ -109,6 +109,8 @@ public class HosModifyFragment extends StandardWithTobBarLayoutFragment {
             hosDataManager = new HosDataManager();
         }
         initData();
+        // 无法修改医院管理员
+        tvHosManager.setEnabled(false);
     }
 
     private void initData() {
@@ -160,6 +162,7 @@ public class HosModifyFragment extends StandardWithTobBarLayoutFragment {
     }
 
     private void pushHosInfo() {
+        // hospital name
         String hosName = etHosName.getText().toString().trim();
         String hosAddr = tvHosAddr.getText().toString().trim();
         String hosDetailAddr = etHosDetailAddr.getText().toString().trim();
@@ -169,14 +172,32 @@ public class HosModifyFragment extends StandardWithTobBarLayoutFragment {
         Hospital hospital = new Hospital();
         hospital.setHospitalId(sHospitalId);
         hospital.setHospitalManager(sHosManagerId);
+
+        // hospital name
+        if (StringUtils.isBlank(hosName)) {
+            Toasty.warning(getContext(), "请填写医院名称", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         hospital.setHospitalName(hosName);
+        // hospital address
+        if (StringUtils.isBlank(hosAddr)) {
+            Toasty.warning(getContext(), "请选择医院地址", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         hospital.setHospitalAddr(hosAddr);
-        hospital.setHospitalGrade(sHosGradeIndex + "");
-        hospital.setIsValid(sHosInvalidIndex + "");
+        // hospital grade
+        if (sHosGradeIndex != null)
+            hospital.setHospitalGrade(sHosGradeIndex + "");
+        // hospital valid
+        if (sHosInvalidIndex != null)
+            hospital.setIsValid(sHosInvalidIndex + "");
+        // hospital detail address
         if (StringUtils.isNotBlank(hosDetailAddr))
             hospital.setDetailAddr(hosDetailAddr);
+        // hospital phone
         if (StringUtils.isNotBlank(hosPhone))
             hospital.setHospitalPhone(hosPhone);
+        // hospital introduction
         if (StringUtils.isNotBlank(hosIntroduction))
             hospital.setIntroduction(hosIntroduction);
 

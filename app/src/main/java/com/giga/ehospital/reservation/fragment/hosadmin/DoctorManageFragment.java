@@ -48,7 +48,7 @@ public class DoctorManageFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static Doctor tDoctor = new Doctor();
+    private Doctor tDoctor = new Doctor();
     private String hospitalId;
     private DoctorDao doctorDao;
     private DoctorDataManager doctorDataManager;
@@ -192,6 +192,7 @@ public class DoctorManageFragment extends StandardWithTobBarLayoutFragment {
 
     private void rxReceiveJsonData() {
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        tDoctor.setHospitalId(hospitalId);
         doctorDataManager.list(tDoctor)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -221,12 +222,7 @@ public class DoctorManageFragment extends StandardWithTobBarLayoutFragment {
      */
     private void dumpAllData(String json) {
         JSONArray jsonArray = GsonParser.fromJSONObject(json, JSONArray.class);
-        List<Doctor> doctors = GsonParser.fromJSONArray(jsonArray, Doctor.class);
-        List<Doctor> doctorList = new ArrayList<>();
-        for (Doctor doctor : doctors) {
-            if (doctor.getHospitalId().equals(hospitalId))
-                doctorList.add(doctor);
-        }
+        List<Doctor> doctorList = GsonParser.fromJSONArray(jsonArray, Doctor.class);
         doctorDao.deleteAll();
         doctorDao.insertInTx(doctorList);
     }

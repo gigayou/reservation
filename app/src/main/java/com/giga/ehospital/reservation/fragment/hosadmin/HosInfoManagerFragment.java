@@ -66,7 +66,7 @@ public class HosInfoManagerFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static Buser buser = new Buser();
+    private Buser buser = new Buser();
 
     private BuserDataManager buserDataManager;
     private HosDataManager hosDataManager;
@@ -77,7 +77,7 @@ public class HosInfoManagerFragment extends StandardWithTobBarLayoutFragment {
 
     private ArrayList<String> gradeOptions = new ArrayList<>();
     private ArrayList<String> invalidOptions = new ArrayList<>();
-    private List<Buser> hosManagerOptions = null;
+    private List<Buser> hosManagerOptions;
 
     private Integer sHosManagerIndex;
     private Integer sHosGradeIndex;
@@ -161,12 +161,35 @@ public class HosInfoManagerFragment extends StandardWithTobBarLayoutFragment {
         String hosIntroduction = etHosIntroduction.getText().toString().trim();
 
         Hospital hospital = new Hospital();
+        // hospital id
         hospital.setHospitalId(sHospitalId);
+        // hospital manager id
         hospital.setHospitalManager(sHosManagerId);
+        // hospital manager name
         hospital.setManagerName(sHosManagerName);
+        // hospital name
+        if (StringUtils.isBlank(hosName)) {
+            Toasty.warning(getContext(), "请填写医院名称", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         hospital.setHospitalName(hosName);
+        // hospital address
+        if (StringUtils.isBlank(hosAddr)) {
+            Toasty.warning(getContext(), "请选择医院地址", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         hospital.setHospitalAddr(hosAddr);
+        // hospital grade
+        if (sHosGradeIndex == null) {
+            Toasty.warning(getContext(), "请选择医院级别", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         hospital.setHospitalGrade(sHosGradeIndex + "");
+        // hospital valid
+        if (sHosInvalidIndex == null) {
+            Toasty.warning(getContext(), "请选择医院有效性", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         hospital.setIsValid(sHosInvalidIndex + "");
         if (StringUtils.isNotBlank(hosDetailAddr))
             hospital.setDetailAddr(hosDetailAddr);
@@ -267,6 +290,7 @@ public class HosInfoManagerFragment extends StandardWithTobBarLayoutFragment {
 
     private void initHosManagerOptions() {
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        buser.setRoleId(ConfigUtil.ROLE_HOS_ADMIN);
         buserDataManager.list(buser)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -290,14 +314,7 @@ public class HosInfoManagerFragment extends StandardWithTobBarLayoutFragment {
 
     private void transform2BuserList(String json) {
         JSONArray jsonArray = GsonParser.fromJSONObject(json, JSONArray.class);
-        List<Buser> buserList = GsonParser.fromJSONArray(jsonArray, Buser.class);
-        List<Buser> hosManagerList = ListUtils.filter(buserList, new ListUtilsHook<Buser>() {
-            @Override
-            public boolean test(Buser buser) {
-                return buser.getRoleId() == ConfigUtil.ROLE_HOS_ADMIN;
-            }
-        });
-        hosManagerOptions = hosManagerList;
+        hosManagerOptions = GsonParser.fromJSONArray(jsonArray, Buser.class);
     }
 
     /**

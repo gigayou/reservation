@@ -67,7 +67,7 @@ public class HosAddFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static Buser buser = new Buser();
+    private Buser buser = new Buser();
 
     private BuserDataManager buserDataManager;
     private HosDataManager hosDataManager;
@@ -133,6 +133,8 @@ public class HosAddFragment extends StandardWithTobBarLayoutFragment {
 
     private void initHosManagerOptions() {
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
+
+        buser.setRoleId(ConfigUtil.ROLE_HOS_ADMIN);
         buserDataManager.list(buser)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -157,13 +159,7 @@ public class HosAddFragment extends StandardWithTobBarLayoutFragment {
     private void transform2BuserList(String json) {
         JSONArray jsonArray = GsonParser.fromJSONObject(json, JSONArray.class);
         List<Buser> buserList = GsonParser.fromJSONArray(jsonArray, Buser.class);
-        List<Buser> hosManagerList = ListUtils.filter(buserList, new ListUtilsHook<Buser>() {
-            @Override
-            public boolean test(Buser buser) {
-                return buser.getRoleId() == ConfigUtil.ROLE_HOS_ADMIN;
-            }
-        });
-        hosManagerOptions = hosManagerList;
+        hosManagerOptions = buserList;
     }
 
     private void initGradeOptions() {
@@ -342,6 +338,12 @@ public class HosAddFragment extends StandardWithTobBarLayoutFragment {
     }
 
     private void pushHosInfo() {
+        // 判断有无医院管理员
+        if (hosManagerOptions.size() == 0) {
+            Toasty.warning(getContext(), "请先添加医院管理员", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+
         String hosName = etHosName.getText().toString().trim();
         String hosAddr = tvHosAddr.getText().toString().trim();
         String hosDetailAddr = etHosDetailAddr.getText().toString().trim();
@@ -356,11 +358,30 @@ public class HosAddFragment extends StandardWithTobBarLayoutFragment {
         String hosId = sb.toString().substring(0,20);
 
         Hospital hospital = new Hospital();
+        // hospital id(uuid size:20)
         hospital.setHospitalId(hosId);
-        hospital.setHospitalManager(hosManagerOptions.get(sHosManagerIndex).getLoginId());
+        // hospital manager id
+        if (sHosManagerIndex != null) {
+            String managerId = hosManagerOptions.get(sHosManagerIndex).getLoginId();
+            hospital.setHospitalManager(managerId);
+        } else {
+            Toasty.warning(getContext(), "请选择医院管理员", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+        if (StringUtils.isBlank(hosName)) {
+            Toasty.warning(getContext(), "请填写医院名称", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         hospital.setHospitalName(hosName);
+        if (StringUtils.isBlank(hosAddr)) {
+            Toasty.warning(getContext(), "请填写医院地址", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         hospital.setHospitalAddr(hosAddr);
-        hospital.setHospitalGrade(sHosGradeIndex + "");
+        if (sHosGradeIndex == null) {
+            Toasty.warning(getContext(), "请选择医院级别", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         hospital.setIsValid(sHosInvalidIndex + "");
         if (StringUtils.isNotBlank(hosDetailAddr))
             hospital.setDetailAddr(hosDetailAddr);

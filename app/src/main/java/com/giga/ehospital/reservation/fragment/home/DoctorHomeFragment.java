@@ -44,7 +44,7 @@ public class DoctorHomeFragment extends BaseFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static Doctor tDoctor = new Doctor();
+    private Doctor tDoctor = new Doctor();
 
     private String userId;
     private DoctorDataManager doctorDataManager;

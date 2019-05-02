@@ -25,7 +25,6 @@ import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
 
 import org.json.JSONArray;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,7 +47,7 @@ public class DepManageFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static Department tDepartment = new Department();
+    private Department tDepartment = new Department();
     private String hospitalId;
     private DepartmentDao departmentDao;
     private DepDataManager depDataManager;
@@ -192,6 +191,7 @@ public class DepManageFragment extends StandardWithTobBarLayoutFragment {
 
     private void rxReceiveJsonData() {
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        tDepartment.setHospitalId(hospitalId);
         depDataManager.list(tDepartment)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -222,13 +222,7 @@ public class DepManageFragment extends StandardWithTobBarLayoutFragment {
     private void dumpAllData(String json) {
         JSONArray jsonArray = GsonParser.fromJSONObject(json, JSONArray.class);
         List<Department> departments = GsonParser.fromJSONArray(jsonArray, Department.class);
-        List<Department> departmentList = new ArrayList<>();
-
-        for (Department department : departments) {
-            if (department.getHospitalId().equals(hospitalId))
-                departmentList.add(department);
-        }
         departmentDao.deleteAll();
-        departmentDao.insertInTx(departmentList);
+        departmentDao.insertInTx(departments);
     }
 }

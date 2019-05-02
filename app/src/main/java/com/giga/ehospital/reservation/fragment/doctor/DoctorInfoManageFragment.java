@@ -56,7 +56,7 @@ public class DoctorInfoManageFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static DepartmentType departmentType = new DepartmentType();
+    private DepartmentType departmentType = new DepartmentType();
 
     private DepTypeDataManager depTypeDataManager;
     private DoctorDataManager doctorDataManager;
@@ -132,41 +132,40 @@ public class DoctorInfoManageFragment extends StandardWithTobBarLayoutFragment {
         String doctorName = etDoctorName.getText().toString().trim();
         String skill = etDoctorSkill.getText().toString().trim();
         String introduction = etDoctorIntro.getText().toString().trim();
-        if (StringUtils.isBlank(doctorName))
+        if (StringUtils.isBlank(doctorName)) {
             Toasty.error(getContext(), "请填写医生姓名", Toasty.LENGTH_SHORT, true).show();
-        else {
-            doctor.setDoctorName(doctorName);
-            if (sSexIndex != null)
-                doctor.setSex(sSexIndex);
-            doctor.setSkill(skill);
-            doctor.setIntroduction(introduction);
-
-            // 更新缓存数据
-            NormalContainer.put(NormalContainer.DOCTOR, doctor);
-
-            final ProgressDialog progressDialog = new ProgressDialog(getContext());
-            doctorDataManager.update(doctor)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe(disposable -> {
-                        progressDialog.setMessage(LOADING_MESSAGE);
-                        progressDialog.show();
-                    })
-                    .doOnComplete(() -> progressDialog.dismiss())
-                    .subscribe(new RxSubscriber<String>() {
-                        @Override
-                        public void onNext(String s) {
-                            ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
-                            if (response.success()) {
-                                getActivity().onBackPressed();
-                                Toasty.success(getContext(), "更新成功", Toasty.LENGTH_SHORT, true).show();
-                            } else {
-                                Toasty.error(getContext(), response.message, Toast.LENGTH_LONG, true).show();
-                            }
-                        }
-                    });
+            return;
         }
+        doctor.setDoctorName(doctorName);
+        if (sSexIndex != null)
+            doctor.setSex(sSexIndex);
+        doctor.setSkill(skill);
+        doctor.setIntroduction(introduction);
 
+        // 更新缓存数据
+        NormalContainer.put(NormalContainer.DOCTOR, doctor);
+
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        doctorDataManager.update(doctor)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    progressDialog.setMessage(LOADING_MESSAGE);
+                    progressDialog.show();
+                })
+                .doOnComplete(() -> progressDialog.dismiss())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                        if (response.success()) {
+                            getActivity().onBackPressed();
+                            Toasty.success(getContext(), "更新成功", Toasty.LENGTH_SHORT, true).show();
+                        } else {
+                            Toasty.error(getContext(), response.message, Toast.LENGTH_LONG, true).show();
+                        }
+                    }
+                });
     }
 
     private void initDepTypeOptions() {
@@ -194,9 +193,7 @@ public class DoctorInfoManageFragment extends StandardWithTobBarLayoutFragment {
 
     private void transform2DepTypeList(String json) {
         JSONArray jsonArray = GsonParser.fromJSONObject(json, JSONArray.class);
-        List<DepartmentType> departmentTypes = GsonParser.fromJSONArray(jsonArray, DepartmentType.class);
-
-        depTypeOptions = departmentTypes;
+        depTypeOptions = GsonParser.fromJSONArray(jsonArray, DepartmentType.class);
     }
 
     private void initSexOptions() {

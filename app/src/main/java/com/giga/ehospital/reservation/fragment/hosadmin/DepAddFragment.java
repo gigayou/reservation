@@ -23,6 +23,7 @@ import com.linxiao.framework.common.GsonParser;
 import com.linxiao.framework.net.ApiResponse;
 import com.linxiao.framework.rx.RxSubscriber;
 
+import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 
 import java.util.List;
@@ -107,10 +108,23 @@ public class DepAddFragment extends StandardWithTobBarLayoutFragment {
             uuid.append(s);
         }
         sDepartmentId = uuid.toString().substring(0,20);
+        // department id
         department.setDepartmentId(sDepartmentId);
         // 需要查看关联的类/sharedpreference中的hospitalId
         department.setHospitalId(sHospitalId);
-        department.setTypeId(sDepTypeId);
+        // department type
+        if (sDepTypeIndex == null) {
+            Toasty.warning(getContext(), "请选择医院类型", Toasty.LENGTH_SHORT, true).show();
+            return;
+        } else {
+            Long typeId = depTypeOptions.get(sDepTypeIndex).getDepartmentTypeId();
+            department.setTypeId(typeId);
+        }
+        // department name
+        if (StringUtils.isBlank(depName)) {
+            Toasty.warning(getContext(), "请填写医院名称", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         department.setDepartmentName(depName);
         department.setTypeName(depTypeName);
 
@@ -162,9 +176,7 @@ public class DepAddFragment extends StandardWithTobBarLayoutFragment {
 
     private void transform2DepTypeList(String json) {
         JSONArray jsonArray = GsonParser.fromJSONObject(json, JSONArray.class);
-        List<DepartmentType> departmentTypes = GsonParser.fromJSONArray(jsonArray, DepartmentType.class);
-
-        depTypeOptions = departmentTypes;
+        depTypeOptions = GsonParser.fromJSONArray(jsonArray, DepartmentType.class);
     }
 
     private void showDepTypePickerView() {
@@ -175,7 +187,6 @@ public class DepAddFragment extends StandardWithTobBarLayoutFragment {
                         depTypeOptions.get(options1).getPickerViewText() : "";
                 tvDepType.setText(depType);
                 sDepTypeIndex = options1;
-                sDepTypeId = depTypeOptions.get(sDepTypeIndex).getDepartmentTypeId();
             }
         })
                 .setTitleText("科室类型选择")

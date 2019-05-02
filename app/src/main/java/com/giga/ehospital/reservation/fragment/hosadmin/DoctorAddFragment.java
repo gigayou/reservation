@@ -60,7 +60,7 @@ public class DoctorAddFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static DepartmentType departmentType = new DepartmentType();
+    private DepartmentType departmentType = new DepartmentType();
 
     private DepTypeDataManager depTypeDataManager;
     private DoctorDataManager doctorDataManager;
@@ -115,89 +115,82 @@ public class DoctorAddFragment extends StandardWithTobBarLayoutFragment {
         }
     }
 
-    private boolean localCheck() {
-        boolean flag = false;
-
-        String loginId = etLoginId.getText().toString().trim();
-        String doctorName = etDoctorName.getText().toString().trim();
-        String sex = tvDoctorSex.getText().toString().trim();
-
-        if (StringUtils.isBlank(loginId)){
-            Toasty.error(getContext(), "请填写登录账号", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-        if (sDepTypeIndex == null){
-            Toasty.error(getContext(), "请选择所属科室", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-        if (StringUtils.isBlank(doctorName)){
-            Toasty.error(getContext(), "请填写医生姓名", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-        if (StringUtils.isBlank(sex)){
-            Toasty.error(getContext(), "请选择医生性别", Toasty.LENGTH_SHORT, true).show();
-            return flag;
-        }
-        flag = true;
-        return flag;
-    }
-
     private void pushInfo() {
-        if (localCheck()) {
-            StringBuilder uuid = new StringBuilder();
-            String[] strSegment = UUID.randomUUID().toString().split("-");
-            for (String s : strSegment) {
-                uuid.append(s);
-            }
-            String doctorId = uuid.toString().substring(0,20);
-            String loginId = etLoginId.getText().toString().trim();
-            String hospitalId = this.hospitalId;
-            Long typeId = depTypeOptions.get(sDepTypeIndex).getDepartmentTypeId();
-            String doctorName = etDoctorName.getText().toString().trim();
-            Integer sex = this.sSexIndex;
-            String doctorTitle = "0";
-            String skill = etDoctorSkill.getText().toString().trim();
-            String introduction = etDoctorIntro.getText().toString().trim();
-
-            Buser buser = new Buser();
-            buser.setLoginId(loginId);
-            buser.setLoginPwd("123456");
-            buser.setUserName(doctorName);
-            buser.setRoleId(ConfigUtil.ROLE_HOS_DOCTOR);
-
-            Doctor doctor = new Doctor();
-            doctor.setDoctorId(doctorId);
-            doctor.setLoginId(loginId);
-            doctor.setHospitalId(hospitalId);
-            doctor.setTypeId(typeId);
-            doctor.setDoctorName(doctorName);
-            doctor.setSex(sex);
-            doctor.setDoctorTitle(doctorTitle);
-            doctor.setSkill(skill);
-            doctor.setIntroduction(introduction);
-
-            final ProgressDialog progressDialog = new ProgressDialog(getContext());
-            doctorDataManager.add(doctor)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doOnSubscribe(disposable -> {
-                        progressDialog.setMessage(LOADING_MESSAGE);
-                        progressDialog.show();
-                    })
-                    .doOnComplete(() -> progressDialog.dismiss())
-                    .subscribe(new RxSubscriber<String>() {
-                        @Override
-                        public void onNext(String s) {
-                            ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
-                            if (response.success()) {
-                                getActivity().onBackPressed();
-                                Toasty.success(getContext(), "添加成功", Toasty.LENGTH_SHORT, true).show();
-                            } else {
-                                Toasty.error(getContext(), response.message, Toast.LENGTH_LONG, true).show();
-                            }
-                        }
-                    });
+        StringBuilder uuid = new StringBuilder();
+        String[] strSegment = UUID.randomUUID().toString().split("-");
+        for (String s : strSegment) {
+            uuid.append(s);
         }
+        // doctor id
+        String doctorId = uuid.toString().substring(0,20);
+        // login id
+        String loginId = etLoginId.getText().toString().trim();
+        if (StringUtils.isBlank(loginId)) {
+            Toasty.warning(getContext(), "请填写登录账号", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+        // hospital id
+        String hospitalId = this.hospitalId;
+        // department type
+        if (sDepTypeIndex == null) {
+            Toasty.warning(getContext(), "请选择所属科室", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+        Long typeId = depTypeOptions.get(sDepTypeIndex).getDepartmentTypeId();
+        // doctor name
+        String doctorName = etDoctorName.getText().toString().trim();
+        if (StringUtils.isBlank(doctorName)) {
+            Toasty.warning(getContext(), "请填写医生姓名", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+        // doctor sex
+        if (this.sSexIndex == null) {
+            Toasty.warning(getContext(), "请选择医生性别", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
+        Integer sex = this.sSexIndex;
+        String doctorTitle = "0";
+        String skill = etDoctorSkill.getText().toString().trim();
+        String introduction = etDoctorIntro.getText().toString().trim();
+
+        Buser buser = new Buser();
+        buser.setLoginId(loginId);
+        buser.setLoginPwd("123456");
+        buser.setUserName(doctorName);
+        buser.setRoleId(ConfigUtil.ROLE_HOS_DOCTOR);
+
+        Doctor doctor = new Doctor();
+        doctor.setDoctorId(doctorId);
+        doctor.setLoginId(loginId);
+        doctor.setHospitalId(hospitalId);
+        doctor.setTypeId(typeId);
+        doctor.setDoctorName(doctorName);
+        doctor.setSex(sex);
+        doctor.setDoctorTitle(doctorTitle);
+        doctor.setSkill(skill);
+        doctor.setIntroduction(introduction);
+
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        doctorDataManager.add(doctor)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    progressDialog.setMessage(LOADING_MESSAGE);
+                    progressDialog.show();
+                })
+                .doOnComplete(() -> progressDialog.dismiss())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                        if (response.success()) {
+                            getActivity().onBackPressed();
+                            Toasty.success(getContext(), "添加成功", Toasty.LENGTH_SHORT, true).show();
+                        } else {
+                            Toasty.error(getContext(), response.message, Toast.LENGTH_LONG, true).show();
+                        }
+                    }
+                });
     }
 
     private void showDepTypePickerView() {

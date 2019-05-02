@@ -45,7 +45,7 @@ public class HosManageFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static Hospital tHospital = new Hospital();
+    private Hospital tHospital = new Hospital();
     private HospitalDao hospitalDao;
     private HosDataManager hosDataManager;
     private List<Hospital> hospitalList;

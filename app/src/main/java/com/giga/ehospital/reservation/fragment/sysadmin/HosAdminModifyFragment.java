@@ -16,6 +16,8 @@ import com.linxiao.framework.common.GsonParser;
 import com.linxiao.framework.net.ApiResponse;
 import com.linxiao.framework.rx.RxSubscriber;
 
+import org.apache.commons.lang3.StringUtils;
+
 import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -88,8 +90,18 @@ public class HosAdminModifyFragment  extends StandardWithTobBarLayoutFragment {
         String hosAdminLoginPwd = etHosadminLoginpwd.getText().toString().trim();
 
         Buser buser = new Buser();
+        // login id
         buser.setLoginId(hosAdminLoginId);
+        if (StringUtils.isBlank(hosAdminUserName)) {
+            Toasty.warning(getContext(), "请填写用户名", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         buser.setUserName(hosAdminUserName);
+        // login pwd
+        if (StringUtils.isBlank(hosAdminLoginPwd)) {
+            Toasty.warning(getContext(), "请填写密码", Toasty.LENGTH_SHORT, true).show();
+            return;
+        }
         buser.setLoginPwd(hosAdminLoginPwd);
         buser.setRoleId(ConfigUtil.ROLE_HOS_ADMIN);
 

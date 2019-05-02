@@ -47,7 +47,7 @@ public class HosAdminManagerFragment extends StandardWithTobBarLayoutFragment {
     @BindString(R.string.LOADING_MESSAGE)
     String LOADING_MESSAGE;
 
-    private static Buser tBuser = new Buser();
+    private Buser tBuser = new Buser();
     private BuserDao buserDao;
     private BuserDataManager buserDataManager;
     private List<Buser> buserList;

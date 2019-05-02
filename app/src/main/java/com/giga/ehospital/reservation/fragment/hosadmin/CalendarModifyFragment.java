@@ -187,12 +187,6 @@ public class CalendarModifyFragment extends StandardWithTobBarLayoutFragment {
         /**visiting date */
         String visitingDate = tvVisitingDate.getText().toString().trim();
 
-        /**visiting num */
-        Integer visitingNum = Integer.valueOf(etVisitingNum.getText().toString().trim());
-
-        /**remaining */
-        Integer remainingNum = Integer.valueOf(etVisitingRnum.getText().toString().trim());
-
         /**valid */
         Integer isValid = sValidIndex;
 
@@ -224,19 +218,25 @@ public class CalendarModifyFragment extends StandardWithTobBarLayoutFragment {
             return;
         }
         // visiting num sel
-        if (StringUtils.isNotBlank(visitingNum + ""))
-            mCalendar.setAdmissionNum(visitingNum);
-        else {
-            Toasty.info(getContext(), "请填写就诊人数", Toasty.LENGTH_SHORT, true).show();
+        Integer visitingNum = null;
+        try {
+            visitingNum = Integer.valueOf(etVisitingNum.getText().toString().trim());
+        } catch (Exception e) {
+            Toasty.error(getContext(), "请在接诊人数上输入有效数字", Toasty.LENGTH_SHORT, true).show();
+            Log.e("error", "cast exception");
             return;
         }
+        mCalendar.setAdmissionNum(visitingNum);
         // remaining num sel
-        if (StringUtils.isNotBlank(remainingNum + ""))
-            mCalendar.setRemainingNum(remainingNum);
-        else {
-            Toasty.info(getContext(), "请填写剩余人数", Toasty.LENGTH_SHORT, true).show();
+        Integer remainingNum = null;
+        try {
+            remainingNum = Integer.valueOf(etVisitingRnum.getText().toString().trim());
+        } catch (Exception e) {
+            Toasty.error(getContext(), "请在剩余人数上输入有效数字", Toasty.LENGTH_SHORT, true).show();
+            Log.e("error", "cast exception");
             return;
         }
+        mCalendar.setRemainingNum(remainingNum);
         // valid
         if (sValidIndex != null)
             mCalendar.setIsValid(isValid);
