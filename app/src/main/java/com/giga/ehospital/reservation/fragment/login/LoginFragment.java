@@ -16,9 +16,15 @@ import android.widget.Toast;
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.activity.HomeActivity;
 import com.giga.ehospital.reservation.base.fragment.BaseFragment;
+import com.giga.ehospital.reservation.container.NormalContainer;
 import com.giga.ehospital.reservation.manager.LoginDataManager;
+import com.giga.ehospital.reservation.manager.patient.UserDataManager;
+import com.giga.ehospital.reservation.manager.sysamdin.BuserDataManager;
+import com.giga.ehospital.reservation.manager.sysamdin.HosDataManager;
 import com.giga.ehospital.reservation.model.User;
+import com.giga.ehospital.reservation.model.hospital.Hospital;
 import com.giga.ehospital.reservation.model.system.Buser;
+import com.giga.ehospital.reservation.util.ConfigUtil;
 import com.linxiao.framework.common.GsonParser;
 import com.linxiao.framework.net.ApiResponse;
 import com.linxiao.framework.rx.RxSubscriber;
@@ -27,6 +33,8 @@ import com.qmuiteam.qmui.layout.QMUIButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -51,7 +59,14 @@ public class LoginFragment extends BaseFragment {
     @BindString(R.string.LOGIN_SUCCESS_MESSAGE)
     String SUCCESS_MESSAGE;
 
+    private Hospital tHospital;
+    private Buser tBuser;
+    private User tUser;
+
     private LoginDataManager loginDataManager;
+    private HosDataManager hosDataManager;
+    private BuserDataManager buserDataManager;
+    private UserDataManager userDataManager;
 
     @Override
     protected View onCreateView() {
@@ -60,6 +75,21 @@ public class LoginFragment extends BaseFragment {
         if (loginDataManager == null) {
             loginDataManager = new LoginDataManager();
         }
+        if (hosDataManager == null) {
+            hosDataManager = new HosDataManager();
+        }
+        if (buserDataManager == null) {
+            buserDataManager = new BuserDataManager();
+        }
+        if (userDataManager == null) {
+            userDataManager = new UserDataManager();
+        }
+        if (tHospital == null)
+            tHospital = new Hospital();
+        if (tBuser == null)
+            tBuser = new Buser();
+        if (tUser == null)
+            tUser = new User();
         return root;
     }
 
@@ -67,13 +97,13 @@ public class LoginFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_login:
-                String username = etUsername.getText().toString();
+                String userId = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 // 根据用户名长度判别是普通用户登录还是管理员登录
-                if (username.length() == 11) {
-                    userLogin(username, password);
+                if (userId.length() == 11) {
+                    userLogin(userId, password);
                 } else {
-                    buserLogin(username, password);
+                    buserLogin(userId, password);
                 }
                 break;
             case R.id.btn_register:
@@ -84,6 +114,90 @@ public class LoginFragment extends BaseFragment {
             default:
                 break;
         }
+    }
+
+    private void selectRelationBuser(String buserId) {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        tBuser.setLoginId(buserId);
+        buserDataManager.list(tBuser)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    progressDialog.setMessage(LOADING_MESSAGE);
+                    progressDialog.show();
+                })
+                .doOnComplete(() -> progressDialog.dismiss())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                        if (response.success()) {
+                            List<Buser> buserList = GsonParser.fromJSONArray(response.data, Buser.class);
+                            if (buserList.size() == 0)
+                                NormalContainer.put(NormalContainer.BUSER, new Buser());
+                            else
+                                NormalContainer.put(NormalContainer.BUSER, buserList.get(0));
+                        } else {
+                            Toasty.error(getContext(),response.message, Toast.LENGTH_LONG, true).show();
+                        }
+                    }
+                });
+    }
+
+    private void selectRelationUser(String userPhone) {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        tUser.setUserPhone(userPhone);
+        userDataManager.list(tUser)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    progressDialog.setMessage(LOADING_MESSAGE);
+                    progressDialog.show();
+                })
+                .doOnComplete(() -> progressDialog.dismiss())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                        if (response.success()) {
+                            List<User> userList = GsonParser.fromJSONArray(response.data, User.class);
+                            if (userList.size() == 0)
+                                NormalContainer.put(NormalContainer.USER, new User());
+                            else
+                                NormalContainer.put(NormalContainer.USER, userList.get(0));
+                        } else {
+                            Toasty.error(getContext(),response.message, Toast.LENGTH_LONG, true).show();
+                        }
+                    }
+                });
+    }
+
+    private void selectRelationHospital(String userId) {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        tHospital.setHospitalManager(userId);
+        hosDataManager.list(tHospital)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    progressDialog.setMessage(LOADING_MESSAGE);
+                    progressDialog.show();
+                })
+                .doOnComplete(() -> progressDialog.dismiss())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                        if (response.success()) {
+                            List<Hospital> hospitals = GsonParser.fromJSONArray(response.data, Hospital.class);
+                            if (hospitals.size() == 0)
+                                NormalContainer.put(NormalContainer.HOSPITAL, new Hospital());
+                            else
+                                NormalContainer.put(NormalContainer.HOSPITAL, hospitals.get(0));
+                        } else {
+                            Toasty.error(getContext(),response.message, Toast.LENGTH_LONG, true).show();
+                        }
+                    }
+                });
     }
 
 
@@ -160,6 +274,7 @@ public class LoginFragment extends BaseFragment {
                     public void onNext(String s) {
                         ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
                         if (response.success()) {
+                            selectRelationUser(username);
                             Toasty.success(getContext(), SUCCESS_MESSAGE, Toast.LENGTH_SHORT, true).show();
                             displayHomeView(-1, username);
                         } else {
@@ -203,6 +318,9 @@ public class LoginFragment extends BaseFragment {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+                            if (roleId == ConfigUtil.ROLE_HOS_ADMIN || roleId == ConfigUtil.ROLE_HOS_DOCTOR)
+                                selectRelationHospital(username);
+                            selectRelationBuser(username);
                             Toasty.success(getContext(), SUCCESS_MESSAGE, Toast.LENGTH_SHORT, true).show();
                             displayHomeView(roleId, username);
                         } else {
@@ -211,7 +329,5 @@ public class LoginFragment extends BaseFragment {
                     }
                 });
     }
-
-
 
 }

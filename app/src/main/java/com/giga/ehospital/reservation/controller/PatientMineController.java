@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
+import com.giga.ehospital.reservation.fragment.about.AboutFragment;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout;
 import com.qmuiteam.qmui.widget.pullRefreshLayout.QMUIPullRefreshLayout;
@@ -45,7 +46,7 @@ public class PatientMineController extends QMUIWindowInsetLayout {
         mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.setTitle(getResources().getString(R.string.mine));
         mTopBar.addRightImageButton(R.mipmap.ic_setting, R.id.topbar_right_setting_button)
-                .setOnClickListener(view -> Toast.makeText(getContext(),"设置按钮", Toast.LENGTH_SHORT).show());
+                .setOnClickListener(view -> mHandler.startFragment(new AboutFragment()));
     }
 
     protected void initRefreshLayout() {

@@ -1,6 +1,9 @@
 <resources>
+    <!-- resrvation app -->
     <string name="app_name" translatable="false">易约挂号</string>
     <string name="slogan" translatable="false">易约挂号  轻松挂号</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+
     <!-- common -->
     <string name="common_example" translatable="false">示例图片</string>
     <string name="app_upgrade_tip_title" translatable="false">Release Notes (%1$s)</string>
@@ -8,6 +11,7 @@
     <string name="cancel" translatable="false">CANCEL</string>
     <string name="wait_please" translatable="false">敬请期待</string>
     <string name="common_right_btn_title" translatable="false">新增</string>
+    <string name="self_info_fragment_title" translatable="false">账号信息</string>
 
     <!--  home ic_activity -->
     <string name="home" translatable="false">首页</string>
@@ -45,6 +49,7 @@
     <string name="sysm_manage_hospital_admin" translatable="false">医院管理员管理</string>
     <string name="sysm_manage_db" translatable="false">数据库管理</string>
     <string name="sysm_system_setting" translatable="false">系统设置</string>
+
     <!-- system manager hos manage-->
     <string name="fragment_hos_manage_title" translatable="false">医院管理</string>
     <!-- hos add fragment -->
@@ -72,6 +77,8 @@
     <string name="row_hosadmin_loginid" translatable="false">账号：</string>
     <string name="row_hosadmin_username" translatable="false">用户名：</string>
     <string name="row_hosadmin_loginpwd" translatable="false">密码：</string>
+
+
 
     <!-- hospital manager home -->
     <string name="hosm_manage_hosinfo" translatable="false">医院信息管理</string>
@@ -123,14 +130,45 @@
     <!-- doctor info manage fragment -->
     <string name="fragment_doctor_info_title" translatable="false">个人简历管理</string>
 
+
     <!-- patient home -->
     <string name="patient_start_reservation" translatable="false">预约挂号</string>
     <string name="patient_depdoc_info" translatable="false">医生查询</string>
     <string name="patient_reservation_info" translatable="false">预约信息</string>
     <string name="patient_reservation_stop" translatable="false">停诊信息</string>
 
-    <!-- about -->
-    <string name="about_copyright" translatable="false">---关于介绍---</string>
 
+
+    <!-- buser info modfiy fragment -->
+    <string name="row_buser_id" translatable="false">用户ID：</string>
+    <string name="row_buser_username" translatable="false">用户名：</string>
+    <string name="row_buser_loginPwd" translatable="false">新密码：</string>
+    <string name="row_buser_oldPwd" translatable="false">旧密码：</string>
+
+    <!-- about fragment -->
+    <string name="fragment_about_title" translatable="false">关于</string>
+    <string name="about_copyright" translatable="false">Copyright © 2015 - %1$s GIGA All Rights Reserved.</string>
+    <string name="about_gratitude" translatable="false">致谢</string>
+    <string name="about_declaration" translatable="false">声明</string>
+    <string name="about_license_agreement" translatable="false">许可协议</string>
+    <string name="about_feedback" translatable="false">反馈</string>
+
+    <string name="app_gratitude_content" translatable="false">
+        \n\u3000\u3000首先，我要感谢我的父母，感谢父母将我抚养长大，感谢你们的付出，让我从小不用为生计、上学而发愁，可以一直做我自己想做的事情。
+        \n\u3000\u3000其次，我要感谢我的导师许文庆老师，对我的研究提出了很多宝贵的意见，使我写作论文有了目标和方向。
+        \n\u3000\u3000该项目使用了大量且成熟的开源组件，若没有这些开发者不图利益的将技术进行无私分享，没有你们作为先锋，我也无法独自一人完成如此庞大的系统。感谢你们让我有机会站在巨人的肩膀上！
+        \n\u3000\u3000最后，仅以此项目向开源致敬！
+    </string>
+
+    <string name="app_declaration_content" translatable="false">
+            \u3000\u3000本系统只是一个毕业设计，用于学术交流，绝无商业用途；也不会对本系统中所有网上查找到的各种资料、信息等进行恶意宣传、传播。再次强调：这只是本人的毕业设计，仅仅用于学术交流，绝无商业用途。\n
+            \u3000\u3000本系统的开发者就是一名普通大学生，每天努力学习，刻苦钻研技术；法律方面初来乍到，一窍不通。但由于涉及法律问题，用户协议也不能胡写；于是本人参考了很多网上能够查找到的用户协议和用户协议范本，完成了本系统的用户协议(请转到《许可协议》中常看)。若有雷同，本人绝不是有意去模仿或抄袭。受影响的任何人、任何单位、任何公司。可任何时候与开发者取得联系并更改相关事项。\n
+            \u3000\u3000本系统中的图标均来自于阿里巴巴图标库，该图标库中的图标均为开放图标，若有侵害任何人、任何单位、任何公司的利益，请立即与开发者取得联系并更改相关事项。\n
+            \u3000\u3000本系统中若有任何不妥或者影响他人利益的事项，系统开发者绝不是有意为之，请立即与开发者取得联系并更改相关事项。\n
+            \u3000\u3000请理解一名大学生开发这么一个庞然大物的困难度，实在是不容易；衷心感谢，理解万岁，社会主义万岁！\n
+    </string>
+
+    <string name="app_license_agreement_content" translatable="false">
+    </string>
 
 </resources>

@@ -36,151 +36,53 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
-                        <!--<LinearLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:orientation="vertical">-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-                        <!--&lt;!&ndash; 用户头像 &ndash;&gt;-->
-                        <!--<LinearLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="160dp"-->
-                        <!--android:background="#00A8E1"-->
-                        <!--android:orientation="vertical">-->
+                            <!-- 用户头像 -->
+                            <LinearLayout
+                                android:id="@+id/llt_self_account"
+                                android:layout_width="match_parent"
+                                android:layout_height="160dp"
+                                android:background="#00A8E1"
+                                android:orientation="vertical">
 
-                        <!--<de.hdodenhof.circleimageview.CircleImageView-->
-                        <!--android:id="@+id/head_imageview"-->
-                        <!--android:layout_width="96dp"-->
-                        <!--android:layout_height="96dp"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:layout_marginTop="8dp"-->
-                        <!--android:contentDescription="@string/nav_header_desc"-->
-                        <!--android:paddingTop="@dimen/nav_header_vertical_spacing"-->
-                        <!--android:src="@drawable/ic_user"-->
-                        <!--app:civ_border_color="#00000000"-->
-                        <!--app:civ_border_width="2dp" />-->
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/head_imageview"
+                                    android:layout_width="96dp"
+                                    android:layout_height="96dp"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="8dp"
+                                    android:contentDescription="@string/nav_header_desc"
+                                    android:paddingTop="@dimen/nav_header_vertical_spacing"
+                                    android:src="@drawable/ic_user"
+                                    app:civ_border_color="#00000000"
+                                    app:civ_border_width="2dp" />
 
-                        <!--<TextView-->
-                        <!--android:id="@+id/username_textview"-->
-                        <!--style="@style/QDCommonDescription"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:layout_marginTop="4dp"-->
-                        <!--android:layout_marginBottom="24dp"-->
-                        <!--android:gravity="start"-->
-                        <!--android:text="用户名"-->
-                        <!--android:textColor="@color/qmui_config_color_white" />-->
+                                <TextView
+                                    android:id="@+id/username_textview"
+                                    style="@style/QDCommonDescription"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_horizontal"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginBottom="24dp"
+                                    android:gravity="start"
+                                    android:text="用户名"
+                                    android:textColor="@color/qmui_config_color_white" />
 
-                        <!--</LinearLayout>-->
+                            </LinearLayout>
 
-                        <!--<LinearLayout-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="100dp"-->
-                        <!--android:background="@color/qmui_config_color_white" />-->
+                            <!-- 用户选项 -->
+                            <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+                                android:id="@+id/groupListView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp" />
+                        </LinearLayout>
 
-                        <!--&lt;!&ndash; 用户选项 &ndash;&gt;-->
-                        <!--<com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView-->
-                        <!--android:id="@+id/groupListView"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_marginBottom="8dp" />-->
-                        <!--</LinearLayout>-->
-
-                        <!--<com.qmuiteam.qmui.layout.QMUILinearLayout-->
-                        <!--android:id="@+id/QMUILinearLayout"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="100dp"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:layout_marginLeft="20dp"-->
-                        <!--android:layout_marginTop="144dp"-->
-                        <!--android:layout_marginRight="20dp"-->
-                        <!--android:gravity="center"-->
-                        <!--android:orientation="horizontal"-->
-                        <!--app:qmui_borderColor="?attr/qmui_config_color_separator"-->
-                        <!--app:qmui_outerNormalColor="?attr/qmui_config_color_background"-->
-                        <!--app:qmui_showBorderOnlyBeforeL="true">-->
-
-                        <!--&lt;!&ndash; show register  &ndash;&gt;-->
-                        <!--<LinearLayout-->
-                        <!--android:id="@+id/wait_diagnosis_linearlayout"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:background="?attr/qmui_s_list_item_bg_with_border_none"-->
-                        <!--android:gravity="center_vertical"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<ImageView-->
-                        <!--android:layout_width="66dp"-->
-                        <!--android:layout_height="66dp"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:layout_marginBottom="4dp"-->
-                        <!--android:src="@mipmap/ic_diagnosis" />-->
-
-                        <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:text="待就诊"-->
-                        <!--android:textColor="?attr/qmui_config_color_gray_5"-->
-                        <!--android:textSize="11sp" />-->
-
-                        <!--</LinearLayout>-->
-
-                        <!--&lt;!&ndash; show outpatient payment  &ndash;&gt;-->
-                        <!--<LinearLayout-->
-                        <!--android:id="@+id/order_linearlayout"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:background="?attr/qmui_s_list_item_bg_with_border_none"-->
-                        <!--android:gravity="center_vertical"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<ImageView-->
-                        <!--android:layout_width="66dp"-->
-                        <!--android:layout_height="66dp"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:layout_marginBottom="4dp"-->
-                        <!--android:src="@mipmap/ic_order" />-->
-
-                        <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:text="订单"-->
-                        <!--android:textColor="?attr/qmui_config_color_gray_5"-->
-                        <!--android:textSize="11sp" />-->
-
-                        <!--</LinearLayout>-->
-
-                        <!--&lt;!&ndash; show medical card  &ndash;&gt;-->
-                        <!--<LinearLayout-->
-                        <!--android:id="@+id/my_collection_linearlayout"-->
-                        <!--android:layout_width="0dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_weight="1"-->
-                        <!--android:background="?attr/qmui_s_list_item_bg_with_border_none"-->
-                        <!--android:gravity="center_vertical"-->
-                        <!--android:orientation="vertical">-->
-
-                        <!--<ImageView-->
-                        <!--android:layout_width="66dp"-->
-                        <!--android:layout_height="66dp"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:layout_marginBottom="4dp"-->
-                        <!--android:src="@mipmap/ic_collect" />-->
-
-                        <!--<TextView-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_gravity="center_horizontal"-->
-                        <!--android:text="收藏"-->
-                        <!--android:textColor="?attr/qmui_config_color_gray_5"-->
-                        <!--android:textSize="11sp" />-->
-                        <!--</LinearLayout>-->
-                        <!--</com.qmuiteam.qmui.layout.QMUILinearLayout>-->
                     </FrameLayout>
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>

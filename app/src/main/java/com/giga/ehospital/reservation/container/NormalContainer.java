@@ -15,6 +15,7 @@ public class NormalContainer implements Serializable {
 
     // 非选择类型
     public static final String USER = "USER"; // 当前登录的用户
+    public static final String BUSER = "BUSER"; // 当前登录的系统管理员|医院管理员|医生
     public static final String HOSPITAL = "HOSPITAL"; // 当前用户（医院管理员|医生）所关联的医院
     public static final String DOCTOR = "DOCTOR";   // 当前用户（医生）的个人信息
 

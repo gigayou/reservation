@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
+import com.giga.ehospital.reservation.container.NormalContainer;
 import com.giga.ehospital.reservation.fragment.home.HealthArticleFragment;
 import com.giga.ehospital.reservation.fragment.hosadmin.CalendarManageFragment;
 import com.giga.ehospital.reservation.fragment.hosadmin.DepManageFragment;
@@ -21,6 +23,7 @@ import com.giga.ehospital.reservation.fragment.hosadmin.DoctorManageFragment;
 import com.giga.ehospital.reservation.fragment.hosadmin.HosInfoManagerFragment;
 import com.giga.ehospital.reservation.helper.DialogHelper;
 import com.giga.ehospital.reservation.helper.TipDialogHelper;
+import com.giga.ehospital.reservation.model.hospital.Hospital;
 import com.giga.ehospital.reservation.model.vo.HealthArticle;
 import com.qmuiteam.qmui.util.QMUIResHelper;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
@@ -50,6 +53,16 @@ public class HosAdminHomeController extends QMUIWindowInsetLayout {
     QMUITabSegment mTabSegment;
     @BindView(R.id.ultraview_pager)
     UltraViewPager mHospitalActivityUltraViewPager;
+    @BindView(R.id.hosm_hosinfo_manage_linearLayout)
+    LinearLayout llt1;
+    @BindView(R.id.hosm_department_manage_linearLayout)
+    LinearLayout llt2;
+    @BindView(R.id.hosm_doctor_manage_linearLayout)
+    LinearLayout llt3;
+    @BindView(R.id.hosm_reservation_manage_linearLayout)
+    LinearLayout llt4;
+    @BindView(R.id.hosm_dataexcel_manage_linearLayout)
+    LinearLayout llt5;
     @BindString(R.string.wait_please)
     String WAIT_PLEASE;
 
@@ -96,6 +109,19 @@ public class HosAdminHomeController extends QMUIWindowInsetLayout {
         initUltraViewPager();
         initTabs();
         initPagers();
+        checkRelationHospitalValid();
+    }
+
+    private void checkRelationHospitalValid() {
+        Hospital hospital = NormalContainer.get(NormalContainer.HOSPITAL);
+        if (hospital == null || hospital.getHospitalId() == null) {
+            Toasty.warning(getContext(), "你当前未管理任何医院，请联系系统管理员", Toasty.LENGTH_SHORT, true).show();
+            llt1.setEnabled(false);
+            llt2.setEnabled(false);
+            llt3.setEnabled(false);
+            llt4.setEnabled(false);
+            llt5.setEnabled(false);
+        }
     }
 
     HashMap<HealthArticleFragment.Pager, View> mPages;

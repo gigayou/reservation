@@ -53,6 +53,12 @@ public class HosAdminModifyFragment  extends StandardWithTobBarLayoutFragment {
     }
 
     @Override
+    protected void initMiddleCustom() {
+        // 无法修改密码
+        etHosadminLoginpwd.setEnabled(false);
+    }
+
+    @Override
     protected void initLastCustom() {
         if (buserDataManager == null) {
             buserDataManager = new BuserDataManager();
