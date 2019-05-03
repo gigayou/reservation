@@ -19,9 +19,11 @@ import com.giga.ehospital.reservation.base.fragment.BaseFragment;
 import com.giga.ehospital.reservation.container.NormalContainer;
 import com.giga.ehospital.reservation.manager.LoginDataManager;
 import com.giga.ehospital.reservation.manager.hosadmin.DoctorDataManager;
+import com.giga.ehospital.reservation.manager.patient.PatientDataManager;
 import com.giga.ehospital.reservation.manager.patient.UserDataManager;
 import com.giga.ehospital.reservation.manager.sysamdin.BuserDataManager;
 import com.giga.ehospital.reservation.manager.sysamdin.HosDataManager;
+import com.giga.ehospital.reservation.model.Patient;
 import com.giga.ehospital.reservation.model.User;
 import com.giga.ehospital.reservation.model.hospital.Doctor;
 import com.giga.ehospital.reservation.model.hospital.Hospital;
@@ -67,6 +69,7 @@ public class LoginFragment extends BaseFragment {
     private Buser tBuser;
     private User tUser;
     private Doctor tDoctor;
+    private Patient tPatient;
 
     private Pattern phonePattern;
 
@@ -75,6 +78,7 @@ public class LoginFragment extends BaseFragment {
     private BuserDataManager buserDataManager;
     private UserDataManager userDataManager;
     private DoctorDataManager doctorDataManager;
+    private PatientDataManager patientDataManager;
 
     @Override
     protected View onCreateView() {
@@ -95,6 +99,9 @@ public class LoginFragment extends BaseFragment {
         if (doctorDataManager == null) {
             doctorDataManager = new DoctorDataManager();
         }
+        if (patientDataManager == null) {
+            patientDataManager = new PatientDataManager();
+        }
         if (tHospital == null)
             tHospital = new Hospital();
         if (tBuser == null)
@@ -103,6 +110,8 @@ public class LoginFragment extends BaseFragment {
             tUser = new User();
         if (tDoctor == null)
             tDoctor = new Doctor();
+        if (tPatient == null)
+            tPatient = new Patient();
         return root;
     }
 
@@ -219,7 +228,7 @@ public class LoginFragment extends BaseFragment {
                 });
     }
 
-    public void selectRelationDoctor(String userId) {
+    private void selectRelationDoctor(String userId) {
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         tDoctor.setLoginId(userId);
         doctorDataManager.list(tDoctor)
@@ -240,6 +249,34 @@ public class LoginFragment extends BaseFragment {
                                 NormalContainer.put(NormalContainer.DOCTOR, new Doctor());
                             else
                                 NormalContainer.put(NormalContainer.DOCTOR, doctors.get(0));
+                        } else {
+                            Toasty.error(getContext(),response.message, Toast.LENGTH_LONG, true).show();
+                        }
+                    }
+                });
+    }
+
+    private void selectRelationPatient(String userPhone) {
+        final ProgressDialog progressDialog = new ProgressDialog(getContext());
+        tPatient.setUserId(userPhone);
+        patientDataManager.list(tPatient)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnSubscribe(disposable -> {
+                    progressDialog.setMessage(LOADING_MESSAGE);
+                    progressDialog.show();
+                })
+                .doOnComplete(() -> progressDialog.dismiss())
+                .subscribe(new RxSubscriber<String>() {
+                    @Override
+                    public void onNext(String s) {
+                        ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
+                        if (response.success()) {
+                            List<Patient> patients = GsonParser.fromJSONArray(response.data, Patient.class);
+                            if (patients.size() == 0)
+                                NormalContainer.put(NormalContainer.PATIENT, new Patient());
+                            else
+                                NormalContainer.put(NormalContainer.PATIENT, patients.get(0));
                         } else {
                             Toasty.error(getContext(),response.message, Toast.LENGTH_LONG, true).show();
                         }
@@ -322,6 +359,7 @@ public class LoginFragment extends BaseFragment {
                         ApiResponse response = GsonParser.fromJSONObject(s, ApiResponse.class);
                         if (response.success()) {
                             selectRelationUser(username);
+                            selectRelationPatient(username);
                             Toasty.success(getContext(), SUCCESS_MESSAGE, Toast.LENGTH_SHORT, true).show();
                             displayHomeView(-1, username);
                         } else {

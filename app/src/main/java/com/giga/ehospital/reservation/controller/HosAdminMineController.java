@@ -136,6 +136,7 @@ public class HosAdminMineController extends QMUIWindowInsetLayout {
                 .addAction(0, confirmMsg, QMUIDialogAction.ACTION_PROP_NEGATIVE, new QMUIDialogAction.ActionListener() {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
+                        NormalContainer.clear();
                         mHandler.startFragment(new LoginFragment());
                         dialog.dismiss();
                     }

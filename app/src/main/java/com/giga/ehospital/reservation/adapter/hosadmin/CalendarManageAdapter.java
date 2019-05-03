@@ -26,6 +26,6 @@ public class CalendarManageAdapter extends BaseRecyclerViewAdapter<Calendar> {
         String doctorName = item.getDoctorName();
         String displayName = doctorName;
         holder.setText(R.id.tv_item_vdoctorName, displayName);
-        holder.setText(R.id.tv_item_vdate, item.getAdmissionDate());
+        holder.setText(R.id.tv_item_vdate, item.getAdmissionDate() + "    剩余人数：" + item.getRemainingNum());
     }
 }

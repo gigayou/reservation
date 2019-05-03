@@ -65,6 +65,18 @@ public interface CalendarAPI {
 
 
     /**
+     * 根据特定的接诊信息、起始时间、终止时间查询相应的接诊安排
+     *
+     * @param map calender  特定的接诊信息
+     *            begin     起始时间
+     *            end       终止时间
+     * @return
+     */
+    @POST("/hospital/calendar/getlistbydateragne")
+    Observable<ResponseBody> getListByDateRange(@Body Map map);
+
+
+    /**
      * 根据接诊安排对象中的医院ID、科室ID、指定日期查询接诊安排信息
      *
      * @param calendar

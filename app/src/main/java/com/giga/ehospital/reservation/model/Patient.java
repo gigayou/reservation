@@ -1,5 +1,6 @@
 package com.giga.ehospital.reservation.model;
 
+import com.contrarywind.interfaces.IPickerViewData;
 import com.giga.ehospital.reservation.model.base.Page;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -14,7 +15,7 @@ import java.io.Serializable;
 //@Entity(nameInDb = "patient_info")
 @Entity
 @Data
-public class Patient extends Page implements Serializable {
+public class Patient extends Page implements Serializable, IPickerViewData {
 
     private static final long serialVersionUID = 6977402643877548876L;
 
@@ -98,5 +99,10 @@ public class Patient extends Page implements Serializable {
     }
     public void setGmtModified(String gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    @Override
+    public String getPickerViewText() {
+        return idCard;
     }
 }

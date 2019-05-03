@@ -15,6 +15,8 @@ import com.bumptech.glide.Glide;
 import com.giga.ehospital.reservation.R;
 import com.giga.ehospital.reservation.base.inter.ControllerClickHandler;
 import com.giga.ehospital.reservation.fragment.home.HealthArticleFragment;
+import com.giga.ehospital.reservation.fragment.patient.HosChoiceFragment;
+import com.giga.ehospital.reservation.fragment.patient.ReservationWaitingFragment;
 import com.giga.ehospital.reservation.helper.DialogHelper;
 import com.giga.ehospital.reservation.helper.TipDialogHelper;
 import com.giga.ehospital.reservation.model.vo.HealthArticle;
@@ -32,6 +34,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import es.dmoral.toasty.Toasty;
 
 public class PatientHomeController extends QMUIWindowInsetLayout {
 
@@ -67,12 +70,16 @@ public class PatientHomeController extends QMUIWindowInsetLayout {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.patient_reservation_linearLayout:
+                mHandler.startFragment(new HosChoiceFragment());
                 break;
             case R.id.patient_depdoc_linearLayout:
+                Toasty.info(getContext(), WAIT_PLEASE, Toasty.LENGTH_SHORT, true).show();
                 break;
             case R.id.patient_resstatus_linearLayout:
+                mHandler.startFragment(new ReservationWaitingFragment());
                 break;
             case R.id.patinet_resstop_linearLayout:
+                Toasty.info(getContext(), WAIT_PLEASE, Toasty.LENGTH_SHORT, true).show();
                 break;
         }
     }
@@ -94,6 +101,7 @@ public class PatientHomeController extends QMUIWindowInsetLayout {
     protected void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.setTitle("首页");
+        mTopBar.setBackgroundColor(getResources().getColor(R.color.qmui_config_color_transparent));
     }
 
     protected void initRefreshLayout() {

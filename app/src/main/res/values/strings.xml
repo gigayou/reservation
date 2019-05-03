@@ -137,7 +137,18 @@
     <string name="patient_reservation_info" translatable="false">预约信息</string>
     <string name="patient_reservation_stop" translatable="false">停诊信息</string>
 
+    <!-- patient reservation -->
+    <string name="patient_hospital_choice_fragment_title" translatable="false">医院选择</string>
+    <string name="patient_deparment_choice_fragment_title" translatable="false">科室选择</string>
+    <string name="patient_doctor_choice_fragment_title" translatable="false">医生选择</string>
+    <string name="patient_calendar_choice_fragment_title" translatable="false">预约选择</string>
+    <string name="patient_res_waiting_fragment_title" translatable="false">待就诊</string>
+    <string name="patient_res_history_fragment_title" translatable="false">挂号记录</string>
+    <string name="patient_res_success_fragment_title" translatable="false">已就诊</string>
 
+    <!-- patient info manage -->
+    <string name="fragment_patient_manage_title" translatable="false">我的诊疗卡</string>
+    <string name="add_idcard_title" translatable="false">添加诊疗卡</string>
 
     <!-- buser info modfiy fragment -->
     <string name="row_buser_id" translatable="false">用户ID：</string>

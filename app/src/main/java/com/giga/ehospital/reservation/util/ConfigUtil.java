@@ -8,7 +8,5 @@ public class ConfigUtil {
     public static final Long ROLE_HOS_ADMIN = 2L;
     public static final Long ROLE_HOS_DOCTOR = 3L;
 
-    public static final String KEY_CALENDAR = "calendar";
-    public static final String KEY_BEGIN = "begin";
-    public static final String KEY_EMD = "end";
+
 }
