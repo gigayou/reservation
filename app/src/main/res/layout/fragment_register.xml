@@ -5,21 +5,6 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/reg_rlt_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="32dp"
-        android:layout_marginRight="32dp"
-        android:layout_above="@id/reg_rlt_main"
-        android:layout_marginBottom="16dp">
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:layout_alignParentRight="true"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:text="@string/back_login" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/reg_rlt_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,14 +17,62 @@
             android:layout_centerInParent="true"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机号："
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etUserPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="text"
+                    android:hint="请输入手机号"
+                    android:autofillHints="请输入手机号"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="密    码："
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/etUserPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:inputType="text"
+                    android:hint="请输入密码"
+                    android:autofillHints="请输入密码"/>
+
+            </LinearLayout>
 
 
+            <com.qmuiteam.qmui.layout.QMUIButton
+                android:id="@+id/btn_register"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="注册" />
 
             <com.qmuiteam.qmui.layout.QMUIButton
                 android:id="@+id/btn_back"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="回滚"/>
+                android:text="返回" />
 
         </LinearLayout>
 

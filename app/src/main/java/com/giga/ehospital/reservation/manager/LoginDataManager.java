@@ -69,4 +69,16 @@ public class LoginDataManager extends BaseDataManager {
         return loginAPI.buserLogin(buser)
                 .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
     }
+
+
+    /**
+     * 用户注册
+     *
+     * @param user
+     * @return
+     */
+    public Observable<String> register(User user) {
+        return loginAPI.registerUser(user)
+                .flatMap((Function<ResponseBody, ObservableSource<String>>) responseBody -> Observable.just(responseBody.string()));
+    }
 }

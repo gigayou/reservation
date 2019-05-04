@@ -65,7 +65,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="16dp"
                             android:gravity="center_horizontal"
-                            android:text="预约挂号系统"
+                            android:text="易约挂号"
                             android:textColor="?attr/qmui_config_color_gray_3"
                             android:textSize="18sp" />
 

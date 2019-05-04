@@ -128,7 +128,7 @@ public class LoginFragment extends BaseFragment {
                 }
                 break;
             case R.id.btn_register:
-//                displayRegView();
+                displayRegView();
                 break;
             case KeyEvent.KEYCODE_BACK:
                 Toast.makeText(getContext(), "test", Toast.LENGTH_SHORT).show();

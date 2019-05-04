@@ -271,8 +271,11 @@ public class PatientManageFragment extends StandardWithTobBarLayoutFragment {
         patient.setIdCard(cardId);
         patient.setCardType("0");
         patient.setRelation("0");
-        patient.setPatientName(user.getUserName());
-
+        String patientName = user.getUserName();
+        if (patientName != null)
+            patient.setPatientName(user.getUserName());
+        else
+            patient.setPatientName("temp");
         patientDataManager.add(patient)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
