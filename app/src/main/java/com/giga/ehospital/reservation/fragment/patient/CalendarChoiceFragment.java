@@ -154,18 +154,11 @@ public class CalendarChoiceFragment extends StandardWithTobBarLayoutFragment {
                         }
                         Reservation reservation = new Reservation();
 
-                        StringBuilder uuid = new StringBuilder();
-                        String[] strSegment = UUID.randomUUID().toString().split("-");
-                        for (String s : strSegment) {
-                            uuid.append(s);
-                        }
-                        String reservationId = uuid.toString().substring(0, 20);
                         String userPhone = user.getUserPhone();
                         String patientId = patient.getPatientId();
                         String admissionId = calendar.getAdmissionId();
                         int isAdmission = 0;
 
-                        reservation.setReservationId(reservationId);
                         reservation.setUserPhone(userPhone);
                         reservation.setPatientId(patientId);
                         reservation.setAdmissionId(admissionId);
